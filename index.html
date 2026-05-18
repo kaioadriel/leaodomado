@@ -1,1 +1,815 @@
-1
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Leão Domado IR - controle anual do Imposto de Renda familiar">
+<meta name="theme-color" content="#1f5f9f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Leão Domado IR">
+<title>Leão Domado IR</title>
+<style>
+:root{
+  --blue-950:#0a2745;--blue-900:#123d6c;--blue-800:#1f5f9f;--blue-700:#2675bd;--blue-100:#dbeeff;--blue-50:#eff7ff;
+  --green-700:#137640;--green-600:#16a34a;--green-100:#dcfce7;--red-700:#b91c1c;--red-600:#dc2626;--red-100:#fee2e2;
+  --yellow-700:#a16207;--yellow-100:#fef3c7;--purple-700:#7e22ce;--purple-100:#f3e8ff;
+  --gray-950:#0f172a;--gray-800:#1f2937;--gray-700:#374151;--gray-600:#4b5563;--gray-500:#6b7280;--gray-300:#d1d5db;--gray-200:#e5e7eb;--gray-100:#f3f4f6;--gray-50:#f8fafc;--white:#fff;
+  --shadow-sm:0 1px 3px rgba(15,23,42,.08),0 1px 2px rgba(15,23,42,.05);--shadow-md:0 8px 24px rgba(15,23,42,.12);--radius:16px;--radius-sm:10px;--nav-h:64px;--tab-h:70px;
+  --font:Inter,Segoe UI,Roboto,system-ui,-apple-system,sans-serif;
+}
+[data-theme="dark"]{--white:#172033;--gray-50:#0f172a;--gray-100:#1e293b;--gray-200:#334155;--gray-300:#475569;--gray-500:#94a3b8;--gray-600:#cbd5e1;--gray-700:#e2e8f0;--gray-800:#f8fafc;--gray-950:#f8fafc;--blue-50:#10233d;--blue-100:#12345b;}
+*{box-sizing:border-box;margin:0;padding:0}html{font-size:16px;scroll-behavior:smooth}body{font-family:var(--font);background:var(--gray-50);color:var(--gray-950);padding-bottom:calc(var(--tab-h) + 10px);min-height:100vh}.app-header{position:sticky;top:0;z-index:20;height:var(--nav-h);display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--blue-900),var(--blue-700));color:#fff;padding:0 16px;box-shadow:var(--shadow-md)}.logo{font-size:1.55rem;font-weight:900;letter-spacing:-.04em;flex:1}.logo b{color:#4ade80}.year-select{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:10px 13px;font-size:1rem;font-weight:800;outline:none}.year-select option{color:#111827}.page{display:none;max-width:980px;margin:0 auto;padding:16px}.page.active{display:block;animation:fade .18s ease}@keyframes fade{from{opacity:.5;transform:translateY(4px)}to{opacity:1;transform:none}}.tab-bar{position:fixed;bottom:0;left:0;right:0;z-index:30;height:var(--tab-h);display:flex;background:var(--white);border-top:1px solid var(--gray-200);box-shadow:0 -8px 22px rgba(15,23,42,.08);overflow-x:auto;scrollbar-width:none}.tab-bar::-webkit-scrollbar{display:none}.tab-btn{min-width:68px;flex:0 0 auto;background:none;border:0;color:var(--gray-500);font-size:.66rem;font-weight:850;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:6px 8px;position:relative}.tab-btn .ico{font-size:1.22rem}.tab-btn.active{color:var(--blue-800)}.tab-btn.active:before{content:"";position:absolute;top:0;left:18%;right:18%;height:4px;border-radius:0 0 6px 6px;background:var(--blue-700)}.badge-dot{position:absolute;top:5px;right:8px;min-width:17px;height:17px;border-radius:999px;background:var(--red-600);color:#fff;font-size:.58rem;display:none;align-items:center;justify-content:center;padding:0 4px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:4px 0 14px;padding-bottom:10px;border-bottom:2px solid var(--gray-200)}.section-head h2{font-size:1.18rem;color:var(--blue-900);display:flex;align-items:center;gap:8px}.card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow-sm)}.card-title{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--gray-500);font-weight:900;margin-bottom:12px;display:flex;gap:7px;align-items:center}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.grid.three{grid-template-columns:repeat(3,1fr)}@media(max-width:620px){.grid,.grid.three{grid-template-columns:1fr 1fr}.page{padding:14px}.hide-sm{display:none!important}}@media(min-width:760px){.grid{grid-template-columns:repeat(4,1fr)}.grid.three{grid-template-columns:repeat(3,1fr)}.page{padding:22px}.tab-bar{height:62px}:root{--tab-h:62px}}.stat{border:1px solid var(--gray-200);background:var(--blue-50);border-left:5px solid var(--blue-700);border-radius:14px;padding:12px;min-height:84px}.stat .lbl{font-size:.68rem;text-transform:uppercase;color:var(--gray-500);font-weight:850;letter-spacing:.05em}.stat .val{font-size:1rem;font-weight:950;margin-top:5px;overflow-wrap:anywhere}.stat.green{background:var(--green-100);border-left-color:var(--green-600)}.stat.red{background:var(--red-100);border-left-color:var(--red-600)}.stat.yellow{background:var(--yellow-100);border-left-color:var(--yellow-700)}.stat.purple{background:var(--purple-100);border-left-color:var(--purple-700)}.result{border-radius:18px;padding:18px;text-align:center;font-weight:950;font-size:1.25rem;margin-bottom:14px;border:2px solid var(--blue-700);background:var(--blue-50);color:var(--blue-900)}.result.green{background:var(--green-100);border-color:var(--green-600);color:var(--green-700)}.result.red{background:var(--red-100);border-color:var(--red-600);color:var(--red-700)}.result small{display:block;font-size:.77rem;font-weight:800;opacity:.75;margin-top:4px}.form-group{margin-bottom:12px}.form-group label{display:block;font-size:.8rem;color:var(--gray-700);font-weight:850;margin-bottom:5px}.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 12px;border:1.5px solid var(--gray-200);border-radius:12px;background:var(--white);color:var(--gray-950);font:inherit;font-size:.94rem;outline:none}.form-group textarea{min-height:80px;resize:vertical}.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--blue-700);box-shadow:0 0 0 3px rgba(38,117,189,.15)}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:560px){.row{grid-template-columns:1fr}}.btn-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:12px;padding:10px 14px;font:inherit;font-size:.88rem;font-weight:900;cursor:pointer}.btn-primary{background:var(--blue-700);color:#fff}.btn-success{background:var(--green-600);color:#fff}.btn-danger{background:var(--red-600);color:#fff}.btn-secondary{background:var(--gray-200);color:var(--gray-800)}.btn-outline{background:transparent;border:1.5px solid var(--blue-700);color:var(--blue-800)}.btn-sm{padding:7px 10px;font-size:.78rem}.btn-full{width:100%}.mini-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.alert{padding:10px 12px;border-radius:12px;font-size:.86rem;font-weight:750;margin-bottom:10px;line-height:1.45}.alert-info{background:var(--blue-50);border-left:4px solid var(--blue-700);color:var(--blue-900)}.alert-warn{background:var(--yellow-100);border-left:4px solid var(--yellow-700);color:var(--yellow-700)}.alert-success{background:var(--green-100);border-left:4px solid var(--green-600);color:var(--green-700)}.alert-danger{background:var(--red-100);border-left:4px solid var(--red-600);color:var(--red-700)}.pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:4px 9px;font-size:.7rem;font-weight:900;letter-spacing:.03em;text-transform:uppercase}.pill.blue{background:var(--blue-100);color:var(--blue-900)}.pill.green{background:var(--green-100);color:var(--green-700)}.pill.red{background:var(--red-100);color:var(--red-700)}.pill.yellow{background:var(--yellow-100);color:var(--yellow-700)}.list-card{padding:13px;border-radius:16px;background:var(--white);border:1px solid var(--gray-200);box-shadow:var(--shadow-sm);margin-bottom:10px}.list-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.list-title{font-size:1rem;font-weight:950;color:var(--gray-950);line-height:1.25}.list-sub{font-size:.78rem;color:var(--gray-500);margin-top:2px;line-height:1.35}.line-values{display:grid;grid-template-columns:1fr;gap:4px;margin:10px 0}.line-values div{display:flex;justify-content:space-between;border-bottom:1px dotted var(--gray-200);gap:8px;font-size:.86rem}.line-values strong{color:var(--gray-600)}.line-values span{font-weight:900;color:var(--blue-900);text-align:right}.inner-tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px;scrollbar-width:none}.inner-tabs::-webkit-scrollbar{display:none}.inner-tab{border:1.5px solid var(--gray-200);background:var(--white);color:var(--gray-600);border-radius:999px;padding:8px 12px;font-size:.8rem;font-weight:900;white-space:nowrap}.inner-tab.active{background:var(--blue-700);border-color:var(--blue-700);color:#fff}.table-wrap{overflow:auto;border:1px solid var(--gray-200);border-radius:16px}.data-table{width:100%;border-collapse:collapse;font-size:.84rem}.data-table th{background:var(--gray-100);text-align:left;color:var(--gray-700);padding:10px}.data-table td{border-top:1px solid var(--gray-100);padding:10px}.memory{background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:16px;padding:14px;font-size:.87rem;line-height:1.65}.memory .mrow{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dotted var(--gray-200);padding:4px 0}.memory .mrow span{font-weight:900;color:var(--blue-900);text-align:right}.memory h4{margin:12px 0 6px;color:var(--blue-900);font-size:.93rem}.modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(2,6,23,.55);align-items:center;justify-content:center;padding:14px}.modal.open{display:flex}.modal-box{background:var(--white);border-radius:22px;max-width:720px;width:100%;max-height:88vh;overflow:auto;padding:18px;box-shadow:var(--shadow-md)}.modal-title{font-weight:950;font-size:1.1rem;margin-bottom:12px}.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}.toastbox{position:fixed;left:50%;bottom:calc(var(--tab-h) + 14px);transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:6px;pointer-events:none}.toast{background:var(--gray-950);color:#fff;border-radius:999px;padding:10px 16px;font-size:.84rem;font-weight:900;box-shadow:var(--shadow-md);animation:tin .2s ease,tout .25s ease 2.7s forwards;white-space:nowrap}@keyframes tin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@keyframes tout{to{opacity:0}}.chart{height:190px;border:1px solid var(--gray-200);border-radius:16px;background:var(--white);padding:8px}.disclaimer{background:var(--yellow-100);border:1px solid #facc15;color:var(--yellow-700);border-radius:14px;padding:10px;font-size:.78rem;font-weight:800;text-align:center;margin-bottom:12px}.compact-note{font-size:.78rem;color:var(--gray-500);line-height:1.45}.searchline{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.searchline input,.searchline select{flex:1;min-width:140px;padding:9px 11px;border:1.5px solid var(--gray-200);border-radius:12px;background:var(--white);color:var(--gray-950);font:inherit;font-size:.86rem}.faixa-grid{display:grid;gap:8px}.quota-grid{display:grid;gap:6px}.quota-row{display:flex;justify-content:space-between;gap:8px;padding:7px 9px;border:1px solid var(--gray-200);border-radius:12px;background:var(--gray-50);font-size:.84rem}@media print{.app-header,.tab-bar,.btn,.btn-row,.inner-tabs,.searchline{display:none!important}.page{display:block!important;padding:0}.card{box-shadow:none;break-inside:avoid}body{padding:0;background:#fff}}
+
+/* ===== Ajustes v5: rodapé flutuante, evoluções e deduções ===== */
+body{padding-bottom:calc(var(--tab-h) + 58px)}
+.tab-bar{left:18px;right:18px;bottom:16px;height:74px;border:1px solid rgba(209,213,219,.85);border-radius:28px;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);box-shadow:0 14px 38px rgba(15,23,42,.18);padding:6px 8px;gap:2px;overflow-x:auto}.tab-btn{min-width:66px;border-radius:22px;padding:6px 7px;color:var(--gray-500)}.tab-btn .ico{font-size:1.28rem}.tab-btn.active{background:var(--blue-50);color:var(--blue-800)}.tab-btn.active:before{display:none}.tab-btn.active .ico{filter:drop-shadow(0 4px 8px rgba(38,117,189,.22))}.app-copy{max-width:980px;margin:10px auto 104px;padding:0 18px;text-align:center;color:var(--gray-500);font-size:.78rem;font-weight:750;line-height:1.45}.evolution-carousel{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-top:8px}.evolution-carousel::-webkit-scrollbar{display:none}.evolution-track{display:flex;gap:12px}.evolution-card{min-width:100%;scroll-snap-align:center;border:1px solid var(--gray-200);background:linear-gradient(180deg,var(--white),var(--blue-50));border-radius:20px;padding:16px;box-shadow:var(--shadow-sm)}@media(min-width:760px){.evolution-card{min-width:calc(33.333% - 8px)}}.evo-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}.evo-title{font-size:1.02rem;font-weight:950;color:var(--gray-950)}.evo-sub{font-size:.75rem;color:var(--gray-500);font-weight:750;margin-top:2px}.evo-value{font-size:1.35rem;font-weight:950;margin:8px 0}.evo-card-line{display:flex;justify-content:space-between;border-bottom:1px dotted var(--gray-200);padding:4px 0;font-size:.84rem}.evo-green{color:var(--green-700)}.evo-red{color:var(--red-700)}.evo-blue{color:var(--blue-900)}.evolution-dots{text-align:center;margin-top:10px}.evolution-dots span{display:inline-block;width:8px;height:8px;border-radius:99px;background:var(--gray-300);margin:0 3px}.evolution-dots span:first-child{width:24px;background:var(--blue-700)}.model-choice{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.model-card{border:1.5px solid var(--gray-200);border-radius:16px;padding:12px;background:var(--white)}.model-card.selected{border-color:var(--blue-700);background:var(--blue-50);box-shadow:0 0 0 3px rgba(38,117,189,.12)}.model-card.best:after{content:'Melhor automático';display:inline-flex;margin-top:8px;border-radius:999px;padding:3px 8px;background:var(--green-100);color:var(--green-700);font-size:.65rem;font-weight:900;text-transform:uppercase}.deducoes-mini{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.deducoes-mini .form-group{margin-bottom:0}@media(max-width:560px){.deducoes-mini{grid-template-columns:1fr}.model-choice{grid-template-columns:1fr}.tab-bar{left:10px;right:10px}}
+
+
+/* ===== Ajustes v2.4 Leão Domado IR ===== */
+:root{--gold-dark:#f4c95d;--gold-light:#f4c95d}
+.logo-leao{letter-spacing:-.05em;white-space:nowrap}.brand-leao{color:var(--gold-dark)}.brand-domado{color:var(--gold-light)}.brand-ir{color:#fff}.app-copy{margin:2px auto 86px;padding:0 18px}.tab-bar{bottom:10px}.page{scroll-margin-top:72px}.version-card{border-left:5px solid var(--gold-dark);background:linear-gradient(180deg,var(--white),var(--yellow-100))}.diff-positive{color:var(--red-700)!important}.diff-negative{color:var(--green-700)!important}.diff-zero{color:var(--blue-900)!important}.pdf-hint{font-size:.76rem;color:var(--gray-500);margin-top:8px}
+#bensList{margin-top:12px}
+#pagamentosList .list-card:first-of-type{margin-top:12px}
+@media(max-width:560px){.app-copy{margin-bottom:80px}.tab-bar{height:70px}.tab-btn{min-width:62px}}
+
+
+
+/* ===== Ajustes v2.5 ===== */
+html, body{overflow-x:hidden}
+.brand-leao{color:var(--gold-light)!important}
+.app-copy{margin:0 auto 66px!important;padding:0 18px!important;line-height:1.34!important}
+.tab-bar{bottom:8px!important}
+.chart{width:100%!important;max-width:100%!important;height:190px!important;display:block!important;box-sizing:border-box!important;padding:0!important}
+#chart{width:100%!important;max-width:100%!important;height:190px!important;display:block!important}
+@media(max-width:560px){.app-copy{margin-bottom:64px!important}.tab-bar{bottom:8px!important}}
+
+
+/* ===== Ajustes v2.7: modo escuro completo nos cards e rodapé ===== */
+[data-theme="dark"]{
+  --gold-dark:#f4c95d;
+  --gold-light:#f4c95d;
+}
+[data-theme="dark"] body{
+  background:var(--gray-50);
+  color:var(--gray-950);
+}
+[data-theme="dark"] .card,
+[data-theme="dark"] .model-card,
+[data-theme="dark"] .modal-box{
+  background:#172033;
+  border-color:#334155;
+  color:#f8fafc;
+  box-shadow:0 10px 28px rgba(0,0,0,.28);
+}
+[data-theme="dark"] .version-card{
+  background:linear-gradient(180deg,#172033,#251e11);
+  border-left-color:var(--gold-light);
+}
+[data-theme="dark"] .section-head h2,
+[data-theme="dark"] .memory h4,
+[data-theme="dark"] .line-values span,
+[data-theme="dark"] .memory .mrow span{
+  color:#bfdbfe;
+}
+[data-theme="dark"] .stat{
+  background:#14243b;
+  border-color:#334155;
+  border-left-color:#60a5fa;
+  color:#f8fafc;
+}
+[data-theme="dark"] .stat.green{
+  background:#0d2f20;
+  border-left-color:#22c55e;
+}
+[data-theme="dark"] .stat.red{
+  background:#3b1115;
+  border-left-color:#f87171;
+}
+[data-theme="dark"] .stat.yellow{
+  background:#332810;
+  border-left-color:#facc15;
+}
+[data-theme="dark"] .stat.purple{
+  background:#271a3d;
+  border-left-color:#c084fc;
+}
+[data-theme="dark"] .stat .lbl,
+[data-theme="dark"] .card-title,
+[data-theme="dark"] .compact-note,
+[data-theme="dark"] .list-sub,
+[data-theme="dark"] .evo-sub,
+[data-theme="dark"] .app-copy{
+  color:#cbd5e1;
+}
+[data-theme="dark"] .stat .val,
+[data-theme="dark"] .list-title,
+[data-theme="dark"] .evo-title{
+  color:#f8fafc;
+}
+[data-theme="dark"] .alert-info,
+[data-theme="dark"] .result{
+  background:#10233d;
+  border-color:#60a5fa;
+  color:#bfdbfe;
+}
+[data-theme="dark"] .alert-success,
+[data-theme="dark"] .result.green{
+  background:#0d2f20;
+  border-color:#22c55e;
+  color:#bbf7d0;
+}
+[data-theme="dark"] .alert-danger,
+[data-theme="dark"] .result.red{
+  background:#3b1115;
+  border-color:#f87171;
+  color:#fecaca;
+}
+[data-theme="dark"] .alert-warn,
+[data-theme="dark"] .disclaimer{
+  background:#332810;
+  border-color:#facc15;
+  color:#fde68a;
+}
+[data-theme="dark"] .memory,
+[data-theme="dark"] .chart,
+[data-theme="dark"] .quota-row,
+[data-theme="dark"] .table-wrap,
+[data-theme="dark"] .data-table th{
+  background:#0f172a;
+  border-color:#334155;
+  color:#f8fafc;
+}
+[data-theme="dark"] .data-table td,
+[data-theme="dark"] .line-values div,
+[data-theme="dark"] .memory .mrow,
+[data-theme="dark"] .evo-card-line{
+  border-color:#334155;
+}
+[data-theme="dark"] .evolution-card{
+  background:linear-gradient(180deg,#172033,#10233d);
+  border-color:#334155;
+}
+[data-theme="dark"] .model-card.selected{
+  background:#10233d;
+  border-color:#60a5fa;
+  box-shadow:0 0 0 3px rgba(96,165,250,.16);
+}
+[data-theme="dark"] .model-card.best:after{
+  background:#0d2f20;
+  color:#bbf7d0;
+}
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group select,
+[data-theme="dark"] .form-group textarea,
+[data-theme="dark"] .searchline input,
+[data-theme="dark"] .searchline select,
+[data-theme="dark"] .inner-tab{
+  background:#0f172a;
+  color:#f8fafc;
+  border-color:#334155;
+}
+[data-theme="dark"] .btn-secondary{
+  background:#334155;
+  color:#f8fafc;
+}
+[data-theme="dark"] .btn-outline{
+  color:#bfdbfe;
+  border-color:#60a5fa;
+}
+[data-theme="dark"] .tab-bar{
+  background:rgba(15,23,42,.94);
+  border-color:#334155;
+  box-shadow:0 18px 42px rgba(0,0,0,.45);
+}
+[data-theme="dark"] .tab-btn{
+  color:#94a3b8;
+}
+[data-theme="dark"] .tab-btn.active{
+  background:#172033;
+  color:#bfdbfe;
+}
+[data-theme="dark"] .tab-btn.active .ico{
+  filter:drop-shadow(0 4px 9px rgba(96,165,250,.28));
+}
+[data-theme="dark"] .brand-leao,
+[data-theme="dark"] .brand-domado{
+  color:var(--gold-light)!important;
+}
+
+
+/* v3.0: remove texto duplicado nos cards de comparação */
+#pagamentosList > .grid,
+#bensList > .grid,
+#bensResumo > .grid,
+#pagResumo > .grid { margin-bottom: 16px; }
+#page-inicio #dashCards + .card { margin-top: 16px; }
+@media (max-width:560px){
+  #pagamentosList > .grid,
+  #bensList > .grid,
+  #bensResumo > .grid,
+  #pagResumo > .grid { margin-bottom: 18px; }
+  #page-inicio #dashCards + .card { margin-top: 18px; }
+}
+
+
+/* ===== Ajustes v3.1: aproximar direitos reservados do rodapé ===== */
+body{padding-bottom:calc(var(--tab-h) + 8px)!important;}
+.app-copy{margin:0 auto 4px!important;padding:0 18px!important;line-height:1.18!important;}
+@media(max-width:560px){
+  body{padding-bottom:calc(var(--tab-h) + 6px)!important;}
+  .app-copy{margin-bottom:2px!important;}
+}
+
+
+/* ===== Ajustes v3.3: checklist sem IRRF conferido ===== */
+#page-rendimentos .btn-row + .searchline,
+#page-bens .btn-row + .searchline,
+#page-pagamentos .btn-row + .searchline{
+  margin-top:14px;
+}
+@media(max-width:560px){
+  #page-rendimentos .btn-row + .searchline,
+  #page-bens .btn-row + .searchline,
+  #page-pagamentos .btn-row + .searchline{
+    margin-top:16px;
+  }
+}
+
+
+/* ===== Ajustes v3.4: Firebase Auth + instalação PWA ===== */
+.auth-screen{position:fixed;inset:0;z-index:999;background:linear-gradient(135deg,var(--blue-950),var(--blue-800));display:flex;align-items:center;justify-content:center;padding:18px;color:#fff}
+.auth-screen.hidden{display:none!important}.auth-card{width:100%;max-width:430px;background:rgba(255,255,255,.96);color:var(--gray-950);border:1px solid rgba(255,255,255,.45);border-radius:28px;padding:24px;box-shadow:0 28px 70px rgba(2,6,23,.34)}
+.auth-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}.auth-icon{font-size:2.2rem}.auth-title{font-size:1.7rem;font-weight:950;letter-spacing:-.05em}.auth-title .a-gold{color:var(--gold-light)}.auth-title .a-blue{color:var(--blue-900)}
+.auth-sub{font-size:.88rem;color:var(--gray-600);line-height:1.45;margin-bottom:16px}.auth-card .form-group{margin-bottom:10px}.auth-actions{display:grid;gap:9px;margin-top:10px}.btn-google{background:#fff;color:#111827;border:1.5px solid var(--gray-200);box-shadow:var(--shadow-sm)}.auth-foot{font-size:.75rem;color:var(--gray-500);line-height:1.4;margin-top:12px;text-align:center}.auth-error{display:none;background:var(--red-100);color:var(--red-700);border-left:4px solid var(--red-600);padding:9px 11px;border-radius:12px;font-size:.8rem;font-weight:800;margin-bottom:10px}.auth-error.show{display:block}
+.auth-status{display:none;align-items:center;gap:6px;max-width:160px;color:#fff;font-size:.72rem;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.auth-status.show{display:flex}.auth-avatar{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-size:.78rem}.logout-btn,.install-btn{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:8px 9px;font-size:.78rem;font-weight:900}.install-btn{display:none}.install-btn.show{display:inline-flex}
+[data-theme="dark"] .auth-card{background:#172033;color:var(--gray-950);border-color:#334155}.offline-badge{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:998;background:var(--yellow-100);color:var(--yellow-700);border:1px solid #facc15;border-radius:999px;padding:6px 12px;font-size:.75rem;font-weight:900;display:none}.offline-badge.show{display:block}
+@media(max-width:560px){.auth-card{padding:20px;border-radius:24px}.auth-title{font-size:1.45rem}.auth-status{display:none!important}.logout-btn{padding:8px}.install-btn{padding:8px}.year-select{max-width:118px}}
+
+
+
+/* Ajustes finais da autenticação Firebase */
+.auth-card .btn-google{background:#fff;color:#111827;border:1.5px solid var(--gray-200);box-shadow:var(--shadow-sm)}
+.auth-card .auth-msg{min-height:22px;font-size:.78rem;color:var(--gray-500);line-height:1.4;margin-top:10px}
+.app-header .install-btn{width:auto!important;border:1px solid rgba(255,255,255,.22)!important;border-radius:12px!important;background:rgba(255,255,255,.16)!important;color:#fff!important;padding:8px 9px!important;font-size:.78rem!important;font-weight:900!important;display:none!important}
+.app-header .install-btn.show{display:inline-flex!important}.auth-card #authInstallBtn{display:none}.auth-card #authInstallBtn.show{display:flex}.logout-btn{display:none}.logout-btn.show{display:inline-flex}
+[data-theme="dark"] .auth-card .btn-google{background:#0f172a;color:#f8fafc;border-color:#334155}
+
+</style>
+</head>
+<body>
+<div class="auth-screen" id="authScreen">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div class="auth-icon">🦁</div>
+      <div class="auth-title"><span class="a-gold">Leão Domado</span> <span class="a-blue">IR</span></div>
+    </div>
+    <p class="auth-sub">Entre com sua conta Google para sincronizar seus dados fiscais com segurança no Firebase. Os dados continuam salvos localmente como apoio.</p>
+    <div class="auth-error" id="authError"></div>
+    <div class="auth-actions">
+      <button class="btn btn-google btn-full" type="button" id="googleLoginBtn" onclick="leaoLoginGoogle()">🌐 Entrar com Google</button>
+      <button class="btn btn-outline btn-full" type="button" id="authInstallBtn" onclick="leaoInstallApp()">📲 Instalar app no Chrome</button>
+    </div>
+    <div class="auth-msg" id="authMsg">Aguardando login...</div>
+    <div class="auth-foot">Leão Domado IR • © 2026 Kaio Adriel<br>Todos os direitos reservados</div>
+  </div>
+</div>
+<div class="offline-badge" id="cloudStatusBadge">Conectando ao Firebase...</div>
+
+<header class="app-header"><div class="logo logo-leao">🦁 <span class="brand-leao">Leão</span> <span class="brand-domado">Domado</span> <span class="brand-ir">IR</span></div><div class="auth-status" id="authStatus"><span class="auth-avatar" id="authAvatar">✓</span><span id="authName">Logado</span></div><button class="install-btn" id="installBtn" onclick="leaoInstallApp()" title="Instalar app">📲</button><button class="logout-btn" id="logoutBtn" onclick="leaoLogout()" title="Sair">Sair</button><select id="yearSelect" class="year-select" onchange="changeYear(this.value)"></select></header>
+<div class="toastbox" id="toastbox"></div>
+<div class="modal" id="modal"><div class="modal-box"><div class="modal-title" id="modalTitle"></div><div id="modalBody"></div><div class="modal-actions" id="modalActions"></div></div></div>
+
+<section class="page active" id="page-inicio">
+ <div id="inicioResult"></div>
+ <div class="card"><div class="card-title">💡 Resumo inteligente</div><div id="smartSummary"></div></div>
+ <div class="grid" id="dashCards"></div>
+ <div class="card"><div class="card-title">📊 Evoluções do ano</div><div id="evolucoesMini"></div></div>
+ <div class="card"><div class="card-title">✅ Checklist automático</div><div id="checklistAuto"></div></div>
+</section>
+
+<section class="page" id="page-dados">
+ <div class="section-head"><h2>👤 Dados</h2><button class="btn btn-primary btn-sm" onclick="saveDados()">💾 Salvar</button></div>
+ <div class="card"><div class="card-title">Titular da declaração</div>
+  <div class="row"><div class="form-group"><label>Nome</label><input id="d_nome"></div><div class="form-group"><label>CPF</label><input id="d_cpf" placeholder="000.000.000-00"></div></div>
+  <div class="row"><div class="form-group"><label>Data de nascimento</label><input id="d_nascimento" type="date"></div><div class="form-group"><label>E-mail</label><input id="d_email" type="email"></div></div>
+  <div class="row"><div class="form-group"><label>Telefone/Celular</label><input id="d_telefone"></div><div class="form-group"><label>CEP</label><input id="d_cep" onblur="buscarCEP()" placeholder="11719-110"></div></div>
+  <div class="row"><div class="form-group"><label>Endereço</label><input id="d_endereco"></div><div class="form-group"><label>Número</label><input id="d_numero"></div></div>
+  <div class="row"><div class="form-group"><label>Complemento</label><input id="d_complemento"></div><div class="form-group"><label>Bairro</label><input id="d_bairro"></div></div>
+  <div class="row"><div class="form-group"><label>Município</label><input id="d_cidade"></div><div class="form-group"><label>UF</label><input id="d_uf" maxlength="2"></div></div>
+  <div class="row"><div class="form-group"><label>Natureza da ocupação</label><select id="d_natureza"><option value="01 - Empregado de empresa do setor privado">01 - Empregado de empresa do setor privado</option><option value="02 - Empregado de instituições financeiras">02 - Empregado de instituições financeiras</option><option value="11 - Profissional liberal ou autônomo">11 - Profissional liberal/autônomo</option><option value="61 - Aposentado">61 - Aposentado</option><option value="outro">Outro</option></select></div><div class="form-group"><label>Ocupação principal</label><input id="d_ocupacao" placeholder="000 - Outras ocupações"></div></div>
+  <div class="row"><div class="form-group"><label>Residente no Brasil?</label><select id="d_residente"><option value="sim">Sim</option><option value="nao">Não</option></select></div><div class="form-group"><label>Moléstia grave/deficiência?</label><select id="d_doenca"><option value="nao">Não</option><option value="sim">Sim</option></select></div></div>
+ </div>
+ <div class="card"><div class="section-head" style="margin:0 0 12px;border:0"><div class="card-title" style="margin:0">👥 Cônjuge / dependentes</div><button class="btn btn-primary btn-sm" onclick="openDependenteForm()">+ Adicionar</button></div><div id="dependentesList"></div></div>
+</section>
+
+<section class="page" id="page-rendimentos">
+ <div class="section-head"><h2>📋 Rendimentos</h2><button class="btn btn-primary btn-sm" onclick="openRendimentoForm()">+ Novo</button></div>
+ <div class="btn-row"><button class="btn btn-outline btn-sm" onclick="puxarAnoAnteriorRendimentos()">📥 Puxar ano anterior</button><button class="btn btn-secondary btn-sm" onclick="openRendimentoForm(null,'trabalho')">💼 Tributáveis</button><button class="btn btn-secondary btn-sm" onclick="openRendimentoForm(null,'isento')">🟢 Isento</button><button class="btn btn-secondary btn-sm" onclick="openRendimentoForm(null,'exclusiva')">🟣 Exclusiva</button></div>
+ <div class="searchline"><input id="rendBusca" oninput="renderRendimentos()" placeholder="🔎 Buscar fonte, CNPJ..."><select id="rendFiltro" onchange="renderRendimentos()"><option value="">Todos os tipos</option><option value="trabalho">Tributáveis</option><option value="isento">Isentos</option><option value="exclusiva">Tributação exclusiva</option></select></div>
+ <div id="rendimentosList"></div>
+</section>
+
+<section class="page" id="page-bens">
+ <div class="section-head"><h2>🏦 Bens</h2><button class="btn btn-primary btn-sm" onclick="openBemForm()">+ Novo</button></div>
+ <div class="btn-row"><button class="btn btn-outline btn-sm" onclick="puxarAnoAnteriorBens()">📥 Puxar bens do ano anterior</button><button class="btn btn-secondary btn-sm" onclick="openBemForm(null,'veiculo')">🚗 Veículo</button><button class="btn btn-secondary btn-sm" onclick="openBemForm(null,'imovel')">🏠 Imóvel</button><button class="btn btn-secondary btn-sm" onclick="openBemForm(null,'conta')">🏦 Conta</button><button class="btn btn-secondary btn-sm" onclick="openBemForm(null,'investimento')">📈 Investimento</button><button class="btn btn-secondary btn-sm" onclick="openBemForm(null,'divida')">📉 Dívida</button></div>
+ <div class="searchline"><input id="bemBusca" oninput="renderBens()" placeholder="🔎 Buscar bem, banco, placa..."><select id="bemFiltro" onchange="renderBens()"><option value="">Todos os bens</option><option value="veiculo">Veículos</option><option value="imovel">Imóveis</option><option value="conta">Contas</option><option value="investimento">Investimentos</option><option value="divida">Dívidas/financiamentos</option></select></div>
+ <div id="bensResumo"></div><div id="bensList"></div>
+</section>
+
+<section class="page" id="page-pagamentos">
+ <div class="section-head"><h2>💳 Pagamentos</h2><button class="btn btn-primary btn-sm" onclick="openPagamentoForm()">+ Novo</button></div>
+ <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="openPagamentoForm(null,'medico')">🩺 Médico</button><button class="btn btn-secondary btn-sm" onclick="openPagamentoForm(null,'educacao')">🎓 Educação</button><button class="btn btn-secondary btn-sm" onclick="openPagamentoForm(null,'pensao')">⚖️ Pensão</button><button class="btn btn-secondary btn-sm" onclick="openPagamentoForm(null,'prevPrivada')">🏛️ PGBL</button><button class="btn btn-secondary btn-sm" onclick="openPagamentoForm(null,'impostoComplementar')">🧾 DARF</button></div>
+ <div class="searchline"><input id="pagBusca" oninput="renderPagamentos()" placeholder="🔎 Buscar pagamento, credor, CPF/CNPJ..."><select id="pagFiltro" onchange="renderPagamentos()"><option value="">Todos os tipos</option><option value="medico">Médico</option><option value="educacao">Educação</option><option value="pensao">Pensão judicial</option><option value="prevPrivada">Previdência privada/PGBL</option><option value="livroCaixa">Livro-caixa</option><option value="outras">Outras deduções</option><option value="impostoComplementar">Imposto complementar/DARF</option></select></div>
+ <div id="pagResumo"></div><div id="pagamentosList"></div>
+</section>
+
+<section class="page" id="page-tabela">
+ <div class="section-head"><h2>📊 Tabela IR</h2><button class="btn btn-primary btn-sm" onclick="salvarTabela()">💾 Salvar</button></div>
+ <div class="card"><div class="card-title">Parâmetros do ano</div>
+  <div class="row"><div class="form-group"><label>Ano-calendário</label><input type="number" id="tbl_ano"></div><div class="form-group"><label>Exercício</label><input type="number" id="tbl_exercicio"></div></div>
+  <div class="row"><div class="form-group"><label>Desconto simplificado (%)</label><input type="number" id="tbl_percDesc" step="0.01"></div><div class="form-group"><label>Limite desconto simplificado (R$)</label><input class="money-input" id="tbl_limiteDesc"></div></div>
+  <div class="row"><div class="form-group"><label>Dedução por dependente (R$)</label><input class="money-input" id="tbl_deducaoDep"></div><div class="form-group"><label>Limite educação por pessoa (R$)</label><input class="money-input" id="tbl_limiteEduc"></div></div>
+  <div class="row"><div class="form-group"><label>Quantidade de quotas/parcelas, máx. 8</label><input type="number" min="1" max="8" id="tbl_parcelas"></div><div class="form-group"><label>Acréscimo fixo da quota (%)</label><input type="number" step="0.01" id="tbl_acrescimoQuota"></div></div>
+  <div class="row"><div class="form-group"><label>SELIC acumulada estimada da 3ª em diante (%)</label><input type="number" step="0.01" id="tbl_selicAcumulada"><button type="button" class="btn btn-outline btn-sm" style="margin-top:8px" onclick="buscarSelicBCB()">🌐 Puxar SELIC BCB</button></div><div class="form-group"><label>Observação dos juros</label><input id="tbl_obsJuros" placeholder="Ex: atualizar no e-CAC"></div></div>
+  <div class="form-group"><label>Observações da tabela</label><textarea id="tbl_obs"></textarea></div>
+ </div>
+ <div class="card"><div class="card-title">Faixas progressivas</div><div id="faixasBox" class="faixa-grid"></div><div class="btn-row"><button class="btn btn-outline btn-sm" onclick="addFaixa()">+ Faixa</button><button class="btn btn-secondary btn-sm" onclick="carregarExemplo2025()">📋 Exemplo anual 2025</button><button class="btn btn-secondary btn-sm" onclick="carregarExemploMensal2025()">📋 Exemplo mensal 2025</button></div><p class="compact-note" style="margin-top:8px">Se você lançar a tabela mensal, o app detecta e anualiza para o cálculo anual.</p></div>
+</section>
+
+<section class="page" id="page-calculo">
+ <div class="section-head"><h2>🧮 Cálculo</h2><button class="btn btn-primary btn-sm" onclick="calcularERender()">Recalcular</button></div>
+ <div id="calcAlertas"></div><div id="calcResultado"></div>
+ <div class="card"><div class="card-title">📝 Memória de cálculo</div><div id="calcMemoria" class="memory"></div></div>
+ <div class="card"><div class="card-title">💳 Estimativa de quotas</div><div id="parcelasBox"></div></div>
+ <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="copiarMemoria()">📋 Copiar memória</button><button class="btn btn-secondary btn-sm" onclick="window.print()">🖨️ Imprimir/PDF</button></div>
+</section>
+
+<section class="page" id="page-simulacoes">
+ <div class="section-head"><h2>🔬 Simulações</h2><button class="btn btn-primary btn-sm" onclick="salvarSimulacao()">💾 Salvar</button></div>
+ <div class="card"><div class="card-title">Nova simulação rápida</div>
+  <div class="row"><div class="form-group"><label>Rendimentos tributáveis (R$)</label><input id="sim_rend" class="money-input"></div><div class="form-group"><label>Previdência oficial (R$)</label><input id="sim_prev" class="money-input"></div></div>
+  <div class="row"><div class="form-group"><label>IRRF (R$)</label><input id="sim_irrf" class="money-input"></div><div class="form-group"><label>Dependentes</label><input type="number" id="sim_deps" min="0"></div></div>
+  <div class="row"><div class="form-group"><label>Isentos informativos (R$)</label><input id="sim_isentos" class="money-input"></div><div class="form-group"><label>Exclusiva informativa (R$)</label><input id="sim_exclusiva" class="money-input"></div></div>
+  <div class="row"><div class="form-group"><label>Despesas médicas simuladas (R$)</label><input id="sim_medicas" class="money-input"></div><div class="form-group"><label>Educação simulada (R$)</label><input id="sim_educacao" class="money-input"></div></div>
+  <div class="row"><div class="form-group"><label>Pensão/PGBL/outras deduções (R$)</label><input id="sim_outrasDed" class="money-input"></div><div class="form-group"><label>Imposto complementar pago (R$)</label><input id="sim_impComp" class="money-input"></div></div>
+  <button class="btn btn-primary btn-sm" onclick="executarSimulacao()">▶️ Simular</button>
+ </div>
+ <div id="simResultado"></div><div id="simHistorico"></div>
+</section>
+
+<section class="page" id="page-historico"><div class="section-head"><h2>📅 Histórico</h2><button class="btn btn-secondary btn-sm" onclick="registrarHistorico()">📌 Registrar ano</button></div><div id="historicoList"></div><div class="card"><div class="card-title">Evolução visual</div><canvas id="chart" class="chart"></canvas></div></section>
+
+<section class="page" id="page-anotacoes"><div class="section-head"><h2>📝 Anotações</h2><button class="btn btn-primary btn-sm" onclick="openNotaForm()">+ Nova</button></div><div class="searchline"><input id="notaBusca" oninput="renderNotas()" placeholder="🔎 Buscar anotação..."><select id="notaFiltro" onchange="renderNotas()"><option value="">Todos</option><option value="pendente">Pendente</option><option value="andamento">Em andamento</option><option value="resolvido">Resolvido</option></select></div><div id="notasList"></div></section>
+
+<section class="page" id="page-backup"><div class="section-head"><h2>💾 Backup</h2></div><div class="card"><div class="card-title">Exportar</div><div class="btn-row"><button class="btn btn-primary" onclick="exportarJSON()">📦 Fazer Backup</button><button class="btn btn-secondary" onclick="exportarCSV()">📊 CSV Resumo</button><button class="btn btn-secondary" onclick="exportarPDFResumo()">📄 PDF Resumo</button></div></div><div class="card"><div class="card-title">Importar</div><div class="form-group"><label>Selecionar arquivo .json</label><input type="file" accept=".json" onchange="importarJSON(event)"></div></div><div class="card"><div class="card-title">Limpar dados</div><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="limparDados('notes')">Limpar Anotações</button><button class="btn btn-secondary btn-sm" onclick="limparDados('simulations')">Limpar Simulações</button><button class="btn btn-secondary btn-sm" onclick="limparDados('history')">Limpar Histórico</button><button class="btn btn-danger" onclick="limparTudo()">⚠️ Apagar TUDO</button></div></div></section>
+
+<section class="page" id="page-ajustes"><div class="section-head"><h2>⚙️ Ajustes</h2><button class="btn btn-primary btn-sm" onclick="salvarAjustes()">💾 Salvar</button></div><div class="card"><div class="card-title">Preferências</div><div class="row"><div class="form-group"><label>Tema</label><select id="cfg_tema"><option value="light">Claro</option><option value="dark">Escuro</option></select></div><div class="form-group"><label>Tamanho da fonte</label><select id="cfg_fonte"><option value="14">Pequena</option><option value="16">Normal</option><option value="18">Grande</option></select></div></div><div class="row"><div class="form-group"><label>Exibir centavos</label><select id="cfg_centavos"><option value="sim">Sim</option><option value="nao">Não</option></select></div></div></div><div class="card"><div class="card-title">🔐 Conta e instalação</div><div class="account-row"><div><div class="compact-note">Usuário conectado</div><div class="account-email" id="authUserEmail">Aguardando login...</div></div><button class="btn btn-secondary btn-sm" onclick="window.leaoFirebase&&window.leaoFirebase.logout()">Sair</button></div><div class="btn-row"><button class="btn btn-primary btn-sm" id="installAppBtnSettings" onclick="window.leaoInstallApp&&window.leaoInstallApp()">📲 Instalar app</button></div><p class="compact-note" style="margin-top:8px">O botão aparece quando o Chrome considerar o PWA instalável.</p></div><div class="card"><div class="card-title">ℹ️ Sobre o app</div><p class="compact-note"><b>Leão Domado IR</b> é uma plataforma digital desenvolvida para simplificar o controle anual do Imposto de Renda familiar. O aplicativo permite que você vá lançando seus rendimentos, despesas e patrimônios continuamente ao longo do ano, garantindo que, na hora de fazer a declaração no ano vem, você já tenha todos os dados organizados e na palma da mão. Um planejamento financeiro seguro, prático e sem correrias.</p></div><div class="card version-card"><div class="card-title">🦁 Versão Leão Domado IR 3.4</div><p class="compact-note">Últimas melhorias: autenticação Firebase; login com Google; instalação PWA solicitável no Chrome.</p></div></section>
+
+<footer class="app-copy">© 2026 Kaio Adriel<br>Todos os direitos reservados</footer>
+<nav class="tab-bar" id="tabbar">
+ <button class="tab-btn active" data-page="inicio" onclick="switchPage('inicio',this)"><span class="ico">🏠</span>Início</button>
+ <button class="tab-btn" data-page="dados" onclick="switchPage('dados',this)"><span class="ico">👤</span>Dados</button>
+ <button class="tab-btn" data-page="rendimentos" onclick="switchPage('rendimentos',this)"><span class="ico">📋</span>Rendim.</button>
+ <button class="tab-btn" data-page="bens" onclick="switchPage('bens',this)"><span class="ico">🏦</span>Bens</button>
+ <button class="tab-btn" data-page="pagamentos" onclick="switchPage('pagamentos',this)"><span class="ico">💳</span>Pagam.</button>
+ <button class="tab-btn" data-page="tabela" onclick="switchPage('tabela',this)"><span class="ico">📊</span>Tabela</button>
+ <button class="tab-btn" data-page="calculo" onclick="switchPage('calculo',this)"><span class="ico">🧮</span>Cálculo</button>
+ <button class="tab-btn" data-page="simulacoes" onclick="switchPage('simulacoes',this)"><span class="ico">🔬</span>Simul.</button>
+ <button class="tab-btn" data-page="historico" onclick="switchPage('historico',this)"><span class="ico">📅</span>Hist.</button>
+ <button class="tab-btn" data-page="anotacoes" onclick="switchPage('anotacoes',this)"><span class="ico">📝</span>Notas<span class="badge-dot" id="notaBadge">0</span></button>
+ <button class="tab-btn" data-page="backup" onclick="switchPage('backup',this)"><span class="ico">💾</span>Backup</button>
+ <button class="tab-btn" data-page="ajustes" onclick="switchPage('ajustes',this)"><span class="ico">⚙️</span>Ajustes</button>
+</nav>
+
+<script>
+const KEY='irDoPaiData_v4';
+const OLD_KEY='irDoPaiData';
+const VERSION=34;
+const uid=(p='id')=>p+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,7);
+const todayYear=()=>new Date().getFullYear()-1;
+var activeYear=todayYear();
+let faixasTemp=[];
+var appData=defaultData();
+function defaultData(){return{version:VERSION,settings:{tema:'light',fonte:'16',centavos:'sim',modo:'clt'},dados:{nome:'',cpf:'',nascimento:'',email:'',telefone:'',cep:'',endereco:'',numero:'',complemento:'',bairro:'',cidade:'',uf:'',natureza:'01 - Empregado de empresa do setor privado',ocupacao:'000 - Outras ocupações não especificadas anteriormente',residente:'sim',doenca:'nao'},dependents:[],incomeEntries:[],assets:[],payments:[],deductions:[],taxTables:[],notes:[],simulations:[],history:[],timeline:[],modelChoices:{}}};
+function loadData(){try{const raw=localStorage.getItem(KEY);if(raw){appData={...defaultData(),...JSON.parse(raw)};normalizeData();return}const old=localStorage.getItem(OLD_KEY);if(old){migrarDadosAntigos(JSON.parse(old));saveData();showToast('Dados antigos migrados para v4','success');return}}catch(e){console.error(e);showToast('Erro ao carregar dados','error');appData=defaultData()}normalizeData()}
+function normalizeData(){appData.settings={...defaultData().settings,...(appData.settings||{})};appData.dados={...defaultData().dados,...(appData.dados||{})};['dependents','incomeEntries','assets','payments','deductions','taxTables','notes','simulations','history','timeline'].forEach(k=>{if(!Array.isArray(appData[k]))appData[k]=[]});if(!appData.modelChoices||Array.isArray(appData.modelChoices))appData.modelChoices={};applySettings()}
+function migrarDadosAntigos(old){appData=defaultData();appData.settings={...appData.settings,...(old.settings||{})};appData.dados={...appData.dados,nome:old.settings?.nome||'',cpf:old.settings?.cpf||''};activeYear=old.settings?.anoDefault||activeYear;(old.entries||[]).forEach(e=>{appData.incomeEntries.push({id:e.id||uid('rend'),ano:+e.ano||activeYear,tipo:'trabalho',beneficiario:'Titular',fonte:e.fontePagadora||'',cnpj:e.cnpj||'',rendTrib:+e.rendTribs||0,prevOficial:+e.prevOficial||0,irrf:+e.irrf||0,dec13:+e.decTerceiro||0,irrf13:+e.irrf13||0,rendIsento:+e.rendIsentos||0,rendExclusiva:+e.rendExclusiva||0,plr:0,obs:e.obs||'',revisado:e.situacao==='conferido'||e.situacao==='declarado'})});(old.taxTables||[]).forEach(t=>appData.taxTables.push({...t,ano:+t.ano,parcelas:t.parcelas||t.parcelamentoQtd||1,selicAcumulada:t.selicAcumulada||t.jurosMensal||0,acrescimoQuota:t.acrescimoQuota||1,faixas:(t.faixas||[]).map(f=>({...f,ate:(f.ate===null?null:f.ate)}))}));appData.notes=old.notes||[];appData.simulations=old.simulations||[];appData.history=old.history||[];}
+function saveData(syncCloud=true){localStorage.setItem(KEY,JSON.stringify(appData));if(syncCloud&&window.leaoFirebase&&window.leaoFirebase.isReady())window.leaoFirebase.saveAppData(appData,activeYear);}
+function applySettings(){document.documentElement.dataset.theme=appData.settings.tema||'light';document.documentElement.style.fontSize=(appData.settings.fonte||16)+'px'}
+function money(v){const cents=appData.settings.centavos!=='nao';let n=typeof v==='number'?v:parseMoney(v);return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:cents?2:0,maximumFractionDigits:cents?2:0})}
+function parseMoney(v){if(v===null||v===undefined||v==='')return 0;if(typeof v==='number')return v;let s=String(v).replace(/R\$\s*/g,'').trim();s=s.replace(/\./g,'').replace(',','.');const n=parseFloat(s);return isNaN(n)?0:n}
+function pct(v){return (+v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%'}
+function setupMoneyMasks(root=document){root.querySelectorAll('.money-input').forEach(inp=>{inp.onblur=()=>{const n=parseMoney(inp.value);if(n)inp.value=money(n)}})}
+function showToast(msg,type=''){const box=document.getElementById('toastbox');const el=document.createElement('div');el.className='toast '+type;el.textContent=msg;box.appendChild(el);setTimeout(()=>el.remove(),3100)}
+function openModal(title,body,actions){document.getElementById('modalTitle').textContent=title;document.getElementById('modalBody').innerHTML=body;document.getElementById('modalActions').innerHTML=actions.map((a,i)=>'<button class="btn '+a.cls+'" data-act="'+i+'">'+a.label+'</button>').join('');document.querySelectorAll('#modalActions button').forEach((b,i)=>b.onclick=actions[i].action);document.getElementById('modal').classList.add('open');setupMoneyMasks(document.getElementById('modal'))}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+function buildYearSelector(){const y=new Date().getFullYear();const set=new Set();for(let a=y+1;a>=y-10;a--)set.add(a-1);appData.incomeEntries.forEach(x=>set.add(+x.ano));appData.assets.forEach(x=>set.add(+x.ano));(appData.payments||[]).forEach(x=>set.add(+x.ano));appData.taxTables.forEach(x=>set.add(+x.ano));const arr=[...set].filter(Boolean).sort((a,b)=>b-a);document.getElementById('yearSelect').innerHTML=arr.map(a=>'<option value="'+a+'" '+(a==activeYear?'selected':'')+'>'+a+'</option>').join('')}
+function changeYear(y){activeYear=+y;window.scrollTo({top:0,behavior:'smooth'});renderAll()}
+function switchPage(page,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+page).classList.add('active');if(btn)btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});renderPage(page)}
+function renderPage(p){if(p==='inicio')renderInicio();if(p==='dados')loadDados();if(p==='rendimentos')renderRendimentos();if(p==='bens')renderBens();if(p==='pagamentos')renderPagamentos();if(p==='tabela')loadTabela();if(p==='calculo')calcularERender();if(p==='simulacoes')renderSimulacoes();if(p==='historico')renderHistorico();if(p==='anotacoes')renderNotas();if(p==='ajustes')loadAjustes()}
+function renderAll(){buildYearSelector();const active=document.querySelector('.tab-btn.active')?.dataset.page||'inicio';renderPage(active);updateNotaBadge()}
+function loadDados(){const d=appData.dados;['nome','cpf','nascimento','email','telefone','cep','endereco','numero','complemento','bairro','cidade','uf','natureza','ocupacao','residente','doenca'].forEach(k=>{const el=document.getElementById('d_'+k);if(el)el.value=d[k]||''});renderDependentes()}
+function saveDados(){['nome','cpf','nascimento','email','telefone','cep','endereco','numero','complemento','bairro','cidade','uf','natureza','ocupacao','residente','doenca'].forEach(k=>{const el=document.getElementById('d_'+k);if(el)appData.dados[k]=el.value});saveData();showToast('Dados salvos','success');renderInicio()}
+async function buscarCEP(){const cep=document.getElementById('d_cep').value.replace(/\D/g,'');if(cep.length!==8)return;try{const r=await fetch('https://viacep.com.br/ws/'+cep+'/json/');const j=await r.json();if(j.erro){showToast('CEP não encontrado','error');return}document.getElementById('d_endereco').value=j.logradouro||'';document.getElementById('d_bairro').value=j.bairro||'';document.getElementById('d_cidade').value=j.localidade||'';document.getElementById('d_uf').value=j.uf||'';showToast('Endereço preenchido','success')}catch(e){showToast('Busca de CEP indisponível neste modo','error')}}
+function openDependenteForm(id=null){const d=id?appData.dependents.find(x=>x.id===id):{};const body='<div class="row"><div class="form-group"><label>Nome</label><input id="dep_nome" value="'+esc(d?.nome)+'"></div><div class="form-group"><label>CPF</label><input id="dep_cpf" value="'+esc(d?.cpf)+'"></div></div><div class="row"><div class="form-group"><label>Nascimento</label><input type="date" id="dep_nascimento" value="'+esc(d?.nascimento)+'"></div><div class="form-group"><label>Tipo</label><select id="dep_tipo"><option value="conjuge">Cônjuge/dependente</option><option value="filho">Filho/enteado</option><option value="outro">Outro dependente</option></select></div></div><div class="row"><div class="form-group"><label>E-mail</label><input id="dep_email" value="'+esc(d?.email)+'"></div><div class="form-group"><label>Celular</label><input id="dep_celular" value="'+esc(d?.celular)+'"></div></div><div class="form-group"><label>Mora com o titular?</label><select id="dep_mora"><option value="sim">Sim</option><option value="nao">Não</option></select></div>';openModal(id?'Editar dependente':'Novo dependente',body,[{label:'Salvar',cls:'btn-primary',action:()=>saveDependente(id)},{label:'Cancelar',cls:'btn-secondary',action:closeModal}]);if(d?.tipo)document.getElementById('dep_tipo').value=d.tipo;if(d?.mora)document.getElementById('dep_mora').value=d.mora}
+function saveDependente(id){const obj={id:id||uid('dep'),nome:val('dep_nome'),cpf:val('dep_cpf'),nascimento:val('dep_nascimento'),tipo:val('dep_tipo'),email:val('dep_email'),celular:val('dep_celular'),mora:val('dep_mora'),revisado:true};if(id){appData.dependents=appData.dependents.map(x=>x.id===id?obj:x)}else appData.dependents.push(obj);saveData();closeModal();renderDependentes();showToast('Dependente salvo','success')}
+function renderDependentes(){const box=document.getElementById('dependentesList');if(!box)return;if(!appData.dependents.length){box.innerHTML='<div class="alert alert-info">Nenhum dependente cadastrado.</div>';return}box.innerHTML=appData.dependents.map(d=>'<div class="list-card"><div class="list-top"><div><div class="list-title">'+esc(d.nome||'Sem nome')+'</div><div class="list-sub">CPF: '+esc(d.cpf||'-')+' • '+esc(d.tipo||'-')+'</div></div><span class="pill green">Revisado</span></div><div class="mini-actions" style="margin-top:10px"><button class="btn btn-outline btn-sm" onclick="openDependenteForm(\''+d.id+'\')">Editar</button><button class="btn btn-danger btn-sm" onclick="delItem(\'dependents\',\''+d.id+'\',renderDependentes)">Excluir</button><button class="btn btn-secondary btn-sm" onclick="openDependenteForm()">Novo</button></div></div>').join('')}
+function val(id){return document.getElementById(id)?.value||''}function esc(s){return String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function delItem(arr,id,cb){if(!confirm('Excluir este item?'))return;appData[arr]=appData[arr].filter(x=>x.id!==id);saveData();cb();showToast('Excluído','success')}
+function openRendimentoForm(id=null,tipoDefault='trabalho'){const r=id?appData.incomeEntries.find(x=>x.id===id):{};const tipo=r?.tipo||tipoDefault;const body='<div class="row"><div class="form-group"><label>Tipo</label><select id="r_tipo" onchange="toggleRendFields()"><option value="trabalho">Tributáveis</option><option value="isento">Isento/não tributável</option><option value="exclusiva">Tributação exclusiva</option></select></div><div class="form-group"><label>Ano</label><input type="number" id="r_ano" value="'+(r?.ano||activeYear)+'"></div></div><div class="row"><div class="form-group"><label>Beneficiário</label><select id="r_beneficiario">'+beneficiarioOptions(r?.beneficiario)+'</select></div><div class="form-group"><label>Status</label><select id="r_revisado"><option value="sim">Revisado</option><option value="nao">Pendente</option></select></div></div><div class="row"><div class="form-group"><label>Fonte pagadora / instituição</label><input id="r_fonte" value="'+esc(r?.fonte)+'"></div><div class="form-group"><label>CNPJ/CPF</label><input id="r_cnpj" value="'+esc(r?.cnpj)+'"></div></div><div id="rendTrabalho"><div class="row"><div class="form-group"><label>Rendimentos tributáveis de PJ</label><input class="money-input" id="r_rendTrib" value="'+fmtInput(r?.rendTrib)+'"></div><div class="form-group"><label>Contribuição previdenciária oficial</label><input class="money-input" id="r_prev" value="'+fmtInput(r?.prevOficial)+'"></div></div><div class="row"><div class="form-group"><label>13º salário</label><input class="money-input" id="r_13" value="'+fmtInput(r?.dec13)+'"></div><div class="form-group"><label>IRRF</label><input class="money-input" id="r_irrf" value="'+fmtInput(r?.irrf)+'"></div></div><div class="row"><div class="form-group"><label>IRRF sobre 13º</label><input class="money-input" id="r_irrf13" value="'+fmtInput(r?.irrf13)+'"></div><div class="form-group"><label>PLR</label><input class="money-input" id="r_plr" value="'+fmtInput(r?.plr)+'"></div></div></div><div id="rendInfo"><div class="row"><div class="form-group"><label>Natureza do rendimento</label><input id="r_natureza" value="'+esc(r?.natureza)+'" placeholder="Ex: aplicações financeiras, poupança, indenização..."></div><div class="form-group"><label>Valor</label><input class="money-input" id="r_valor" value="'+fmtInput(r?.valor)+'"></div></div></div><div class="form-group"><label>Observações</label><textarea id="r_obs">'+esc(r?.obs)+'</textarea></div>';openModal(id?'Editar rendimento':'Novo rendimento',body,[{label:'Salvar',cls:'btn-primary',action:()=>saveRendimento(id)},{label:'Cancelar',cls:'btn-secondary',action:closeModal}]);document.getElementById('r_tipo').value=tipo;document.getElementById('r_revisado').value=r?.revisado===false?'nao':'sim';toggleRendFields();}
+function beneficiarioOptions(sel){let opts=['Titular',...appData.dependents.map(d=>d.nome||'Dependente')];return opts.map(o=>'<option value="'+esc(o)+'" '+(o===sel?'selected':'')+'>'+esc(o)+'</option>').join('')}
+function toggleRendFields(){const t=val('r_tipo');document.getElementById('rendTrabalho').style.display=t==='trabalho'?'':'none';document.getElementById('rendInfo').style.display=t==='trabalho'?'none':''}
+function fmtInput(v){return v?money(v):''}
+function saveRendimento(id){const tipo=val('r_tipo');let obj={id:id||uid('rend'),ano:+val('r_ano')||activeYear,tipo,beneficiario:val('r_beneficiario'),fonte:val('r_fonte'),cnpj:val('r_cnpj'),natureza:val('r_natureza'),obs:val('r_obs'),revisado:val('r_revisado')==='sim'};if(tipo==='trabalho'){Object.assign(obj,{rendTrib:parseMoney(val('r_rendTrib')),prevOficial:parseMoney(val('r_prev')),dec13:parseMoney(val('r_13')),irrf:parseMoney(val('r_irrf')),irrf13:parseMoney(val('r_irrf13')),plr:parseMoney(val('r_plr')),valor:0})}else{obj.valor=parseMoney(val('r_valor'));obj.rendTrib=0;obj.prevOficial=0;obj.irrf=0;obj.dec13=0;obj.irrf13=0;obj.plr=0}if(id)appData.incomeEntries=appData.incomeEntries.map(x=>x.id===id?obj:x);else appData.incomeEntries.push(obj);saveData();closeModal();renderRendimentos();showToast('Rendimento salvo','success')}
+function rendimentosAno(){return appData.incomeEntries.filter(r=>+r.ano===+activeYear)}
+function renderRendimentos(){const box=document.getElementById('rendimentosList');if(!box)return;const busca=(val('rendBusca')||'').toLowerCase(),f=val('rendFiltro');let list=rendimentosAno().filter(r=>(!f||r.tipo===f)&&(!busca||[r.fonte,r.cnpj,r.natureza,r.beneficiario].join(' ').toLowerCase().includes(busca)));if(!list.length){box.innerHTML='<div class="alert alert-info">Nenhum rendimento para '+activeYear+'. Use + Novo ou puxe o ano anterior.</div>';return}box.innerHTML=list.map(r=>renderRendCard(r)).join('')}
+function renderRendCard(r){const typeLabel=r.tipo==='trabalho'?'Tributáveis':r.tipo==='isento'?'Isento':'Exclusiva';const pill=r.revisado?'<span class="pill green">Revisado</span>':'<span class="pill yellow">Pendente</span>';let lines='';if(r.tipo==='trabalho'){lines='<div><strong>Tributáveis</strong><span>'+money(r.rendTrib)+'</span></div><div><strong>Previdência</strong><span>'+money(r.prevOficial)+'</span></div><div><strong>IRRF</strong><span>'+money(r.irrf)+'</span></div><div><strong>13º / IRRF 13º</strong><span>'+money(r.dec13)+' / '+money(r.irrf13)+'</span></div>'+(r.plr?'<div><strong>PLR</strong><span>'+money(r.plr)+'</span></div>':'')}else{lines='<div><strong>Valor</strong><span>'+money(r.valor)+'</span></div><div><strong>Natureza</strong><span>'+esc(r.natureza||typeLabel)+'</span></div>'}return '<div class="list-card"><div class="list-top"><div><div class="list-title">'+esc(r.fonte||'Fonte não informada')+'</div><div class="list-sub">'+esc(r.cnpj||'CNPJ não informado')+' • '+esc(r.beneficiario||'Titular')+' • '+typeLabel+'</div></div>'+pill+'</div><div class="line-values">'+lines+'</div><div class="mini-actions"><button class="btn btn-outline btn-sm" onclick="openRendimentoForm(\''+r.id+'\')">✏️ Editar</button><button class="btn btn-secondary btn-sm" onclick="duplicarRendimento(\''+r.id+'\')">📋 Duplicar</button><button class="btn btn-danger btn-sm" onclick="delItem(\'incomeEntries\',\''+r.id+'\',renderRendimentos)">🗑️ Excluir</button></div></div>'}
+function duplicarRendimento(id){const r=appData.incomeEntries.find(x=>x.id===id);if(!r)return;appData.incomeEntries.push({...r,id:uid('rend'),ano:activeYear,revisado:false});saveData();renderRendimentos();showToast('Duplicado','success')}
+function puxarAnoAnteriorRendimentos(){const prev=activeYear-1;const items=appData.incomeEntries.filter(r=>+r.ano===prev);if(!items.length){showToast('Não há rendimentos em '+prev,'error');return}if(!confirm('Copiar '+items.length+' rendimento(s) de '+prev+' para '+activeYear+'?'))return;items.forEach(r=>appData.incomeEntries.push({...r,id:uid('rend'),ano:activeYear,revisado:false,obs:(r.obs||'')+' | Copiado de '+prev}));saveData();renderRendimentos();showToast('Rendimentos copiados','success')}
+
+function findBemAnteriorCandidate(){const ano=+val('b_ano')||activeYear;const tipo=val('b_tipo');const codigo=(val('b_codigo')||'').trim().toLowerCase();const nome=(val('b_nome')||'').trim().toLowerCase();const inst=(val('b_instituicao')||'').trim().toLowerCase();return (appData.assets||[]).find(x=>+x.ano===ano-1&&x.tipo===tipo&&((codigo&&String(x.codigo||'').toLowerCase()===codigo)||(nome&&String(x.nome||'').toLowerCase()===nome)||(inst&&String(x.instituicao||'').toLowerCase()===inst)))}
+function autofillBemAnterior(){const ant=document.getElementById('b_ant');if(!ant||parseMoney(ant.value)>0)return;const cand=findBemAnteriorCandidate();if(cand){ant.value=money(+cand.valorAtual||0);showToast('Valor do ano anterior preenchido','success')}}
+
+function openBemForm(id=null,tipoDefault='veiculo'){const b=id?appData.assets.find(x=>x.id===id):{};const tipo=b?.tipo||tipoDefault;const body='<div class="row"><div class="form-group"><label>Tipo</label><select id="b_tipo" onchange="toggleBemFields();autofillBemAnterior()"><option value="veiculo">Veículo</option><option value="imovel">Imóvel</option><option value="conta">Conta bancária/pagamento</option><option value="investimento">Aplicação/investimento</option><option value="divida">Dívida/financiamento</option></select></div><div class="form-group"><label>Ano</label><input type="number" id="b_ano" onchange="autofillBemAnterior()" value="'+(b?.ano||activeYear)+'"></div></div><div class="row"><div class="form-group"><label>Proprietário</label><select id="b_proprietario">'+beneficiarioOptions(b?.proprietario)+'</select></div><div class="form-group"><label>Status</label><select id="b_revisado"><option value="sim">Revisado</option><option value="nao">Pendente</option></select></div></div><div class="row"><div class="form-group"><label>Apelido / descrição curta</label><input id="b_nome" onblur="autofillBemAnterior()" value="'+esc(b?.nome)+'"></div><div class="form-group"><label>Instituição/Credor</label><input id="b_instituicao" onblur="autofillBemAnterior()" value="'+esc(b?.instituicao)+'"></div></div><div class="row"><div class="form-group"><label>CNPJ/CPF</label><input id="b_cnpj" value="'+esc(b?.cnpj)+'"></div><div class="form-group"><label>Código/identificação</label><input id="b_codigo" onblur="autofillBemAnterior()" value="'+esc(b?.codigo)+'" placeholder="Placa, agência/conta, matrícula..."></div></div><div id="bemExtra" class="row"><div class="form-group"><label>Detalhe 1</label><input id="b_extra1" value="'+esc(b?.extra1)+'"></div><div class="form-group"><label>Detalhe 2</label><input id="b_extra2" value="'+esc(b?.extra2)+'"></div></div><div class="row"><div class="form-group"><label>Valor em 31/12 do ano anterior</label><input class="money-input" id="b_ant" value="'+fmtInput(b?.valorAnterior)+'"></div><div class="form-group"><label>Valor em 31/12 do ano atual</label><input class="money-input" id="b_atual" value="'+fmtInput(b?.valorAtual)+'"></div></div><div id="rendBem"><div class="row"><div class="form-group"><label>Rendimento isento gerado</label><input class="money-input" id="b_rendIsento" value="'+fmtInput(b?.rendIsento)+'"></div><div class="form-group"><label>Rendimento tributação exclusiva gerado</label><input class="money-input" id="b_rendExclusiva" value="'+fmtInput(b?.rendExclusiva)+'"></div></div></div><div class="form-group"><label>Descrição completa / observações</label><textarea id="b_obs">'+esc(b?.obs)+'</textarea></div>';openModal(id?'Editar bem':'Novo bem',body,[{label:'Salvar',cls:'btn-primary',action:()=>saveBem(id)},{label:'Cancelar',cls:'btn-secondary',action:closeModal}]);document.getElementById('b_tipo').value=tipo;document.getElementById('b_revisado').value=b?.revisado===false?'nao':'sim';toggleBemFields()}
+function toggleBemFields(){const t=val('b_tipo');const labels={veiculo:['Marca/modelo/ano','RENAVAM/Placa'],imovel:['Endereço/área','Matrícula/IPTU'],conta:['Agência','Conta'],investimento:['Tipo de aplicação','Número/conta custódia'],divida:['Contrato','Tipo de dívida']};document.querySelector('label[for="b_extra1"]');const group=document.getElementById('bemExtra');if(group){group.querySelectorAll('label')[0].textContent=labels[t][0];group.querySelectorAll('label')[1].textContent=labels[t][1]}document.getElementById('rendBem').style.display=(t==='conta'||t==='investimento')?'':'none'}
+function saveBem(id){const obj={id:id||uid('bem'),ano:+val('b_ano')||activeYear,tipo:val('b_tipo'),proprietario:val('b_proprietario'),revisado:val('b_revisado')==='sim',nome:val('b_nome'),instituicao:val('b_instituicao'),cnpj:val('b_cnpj'),codigo:val('b_codigo'),extra1:val('b_extra1'),extra2:val('b_extra2'),valorAnterior:parseMoney(val('b_ant')),valorAtual:parseMoney(val('b_atual')),rendIsento:parseMoney(val('b_rendIsento')),rendExclusiva:parseMoney(val('b_rendExclusiva')),obs:val('b_obs')};if(id)appData.assets=appData.assets.map(x=>x.id===id?obj:x);else appData.assets.push(obj);saveData();closeModal();renderBens();showToast('Bem salvo','success')}
+function bensAno(){return appData.assets.filter(b=>+b.ano===+activeYear)}
+function renderBens(){const listbox=document.getElementById('bensList');if(!listbox)return;const totals=totaisPatrimonio(activeYear);document.getElementById('bensResumo').innerHTML='<div class="grid"><div class="stat blue"><div class="lbl">Bens/contas anterior</div><div class="val">'+money(totals.bensAnterior)+'</div></div><div class="stat blue"><div class="lbl">Bens/contas atual</div><div class="val">'+money(totals.bensAtual)+'</div></div><div class="stat red"><div class="lbl">Dívidas atual</div><div class="val">'+money(totals.dividasAtual)+'</div></div><div class="stat '+(totals.evolucao>=0?'green':'red')+'"><div class="lbl">Evolução líquida</div><div class="val">'+money(totals.evolucao)+'</div></div></div>';const busca=(val('bemBusca')||'').toLowerCase(),f=val('bemFiltro');let list=bensAno().filter(b=>(!f||b.tipo===f)&&(!busca||[b.nome,b.instituicao,b.cnpj,b.codigo,b.obs,b.extra1,b.extra2].join(' ').toLowerCase().includes(busca)));if(!list.length){listbox.innerHTML='<div class="alert alert-info">Nenhum bem cadastrado para '+activeYear+'.</div>';return}listbox.innerHTML=list.map(b=>renderBemCard(b)).join('')}
+function renderBemCard(b){const tipo={veiculo:'Veículo',imovel:'Imóvel',conta:'Conta',investimento:'Investimento',divida:'Dívida/financiamento'}[b.tipo]||b.tipo;const pill=b.revisado?'<span class="pill green">Revisado</span>':'<span class="pill yellow">Pendente</span>';let extra=(b.rendIsento||b.rendExclusiva)?'<div><strong>Rend. isento/exclusiva</strong><span>'+money(b.rendIsento)+' / '+money(b.rendExclusiva)+'</span></div>':'';return '<div class="list-card"><div class="list-top"><div><div class="list-title">'+esc(b.nome||b.instituicao||tipo)+'</div><div class="list-sub">'+tipo+' • '+esc(b.proprietario||'Titular')+' • '+esc(b.cnpj||b.codigo||'sem identificação')+'</div></div>'+pill+'</div><div class="line-values"><div><strong>Valor anterior</strong><span>'+money(b.valorAnterior)+'</span></div><div><strong>Valor atual</strong><span>'+money(b.valorAtual)+'</span></div>'+extra+'</div><div class="mini-actions"><button class="btn btn-outline btn-sm" onclick="openBemForm(\''+b.id+'\')">✏️ Editar</button><button class="btn btn-secondary btn-sm" onclick="duplicarBem(\''+b.id+'\')">📋 Duplicar</button><button class="btn btn-danger btn-sm" onclick="delItem(\'assets\',\''+b.id+'\',renderBens)">🗑️ Excluir</button></div></div>'}
+function duplicarBem(id){const b=appData.assets.find(x=>x.id===id);if(!b)return;appData.assets.push({...b,id:uid('bem'),ano:activeYear,revisado:false});saveData();renderBens();showToast('Duplicado','success')}
+function puxarAnoAnteriorBens(){const prev=activeYear-1;const items=appData.assets.filter(b=>+b.ano===prev);if(!items.length){showToast('Não há bens em '+prev,'error');return}if(!confirm('Copiar '+items.length+' bem(ns) de '+prev+' para '+activeYear+'?'))return;items.forEach(b=>appData.assets.push({...b,id:uid('bem'),ano:activeYear,valorAnterior:b.valorAtual,rendIsento:0,rendExclusiva:0,revisado:false,obs:(b.obs||'')+' | Copiado de '+prev}));saveData();renderBens();showToast('Bens copiados','success')}
+function loadTabela(){let t=getTabela(activeYear)||novaTabela(activeYear);document.getElementById('tbl_ano').value=t.ano;document.getElementById('tbl_exercicio').value=t.exercicio||(+t.ano+1);document.getElementById('tbl_percDesc').value=t.percDesc??20;document.getElementById('tbl_limiteDesc').value=t.limiteDesc?money(t.limiteDesc):'';document.getElementById('tbl_deducaoDep').value=t.deducaoDep?money(t.deducaoDep):'';document.getElementById('tbl_limiteEduc').value=t.limiteEduc?money(t.limiteEduc):'';document.getElementById('tbl_parcelas').value=t.parcelas||1;document.getElementById('tbl_selicAcumulada').value=t.selicAcumulada||0;document.getElementById('tbl_acrescimoQuota').value=t.acrescimoQuota??1;document.getElementById('tbl_obsJuros').value=t.obsJuros||'';document.getElementById('tbl_obs').value=t.obs||'';faixasTemp=(t.faixas||[]).map(f=>({...f}));renderFaixas();setupMoneyMasks()}
+function novaTabela(ano){return{ano,exercicio:ano+1,percDesc:20,limiteDesc:16754.34,deducaoDep:2275.08,limiteEduc:3561.50,parcelas:1,selicAcumulada:0,acrescimoQuota:1,obs:'',obsJuros:'',faixas:[]}}
+function getTabela(ano){return appData.taxTables.find(t=>+t.ano===+ano)||null}
+function salvarTabela(){const ano=+val('tbl_ano')||activeYear;const t={ano,exercicio:+val('tbl_exercicio')||ano+1,percDesc:+val('tbl_percDesc')||20,limiteDesc:parseMoney(val('tbl_limiteDesc')),deducaoDep:parseMoney(val('tbl_deducaoDep')),limiteEduc:parseMoney(val('tbl_limiteEduc')),parcelas:Math.min(8,Math.max(1,+val('tbl_parcelas')||1)),selicAcumulada:+val('tbl_selicAcumulada')||0,acrescimoQuota:+val('tbl_acrescimoQuota')||0,obsJuros:val('tbl_obsJuros'),obs:val('tbl_obs'),faixas:faixasTemp.map((f,i)=>({de:parseMoney(val('fx_de_'+i)),ate:val('fx_ate_'+i).trim().toLowerCase()==='acima'||val('fx_ate_'+i)===''?null:parseMoney(val('fx_ate_'+i)),aliq:+val('fx_aliq_'+i)||0,ded:parseMoney(val('fx_ded_'+i))}))};appData.taxTables=appData.taxTables.filter(x=>+x.ano!==+ano);appData.taxTables.push(t);activeYear=ano;saveData();buildYearSelector();showToast('Tabela salva','success');loadTabela()}
+async function buscarSelicBCB(){
+  const anoRef=(+val('tbl_exercicio')||(+val('tbl_ano')+1)||new Date().getFullYear());
+  const hoje=new Date();
+  const dataFinal=((hoje.getDate()).toString().padStart(2,'0'))+'/'+((hoje.getMonth()+1).toString().padStart(2,'0'))+'/'+hoje.getFullYear();
+  const dataInicial='01/01/'+anoRef;
+  const url='https://api.bcb.gov.br/dados/serie/bcdata.sgs.4390/dados?formato=json&dataInicial='+encodeURIComponent(dataInicial)+'&dataFinal='+encodeURIComponent(dataFinal);
+  try{
+    showToast('Buscando SELIC no Banco Central...');
+    const resp=await fetch(url,{cache:'no-store'});
+    if(!resp.ok)throw new Error('HTTP '+resp.status);
+    const dados=await resp.json();
+    if(!Array.isArray(dados)||!dados.length)throw new Error('sem dados disponíveis para o período');
+    const soma=dados.reduce((acc,item)=>acc+(parseFloat(String(item.valor).replace(',','.'))||0),0);
+    document.getElementById('tbl_selicAcumulada').value=soma.toFixed(2);
+    document.getElementById('tbl_obsJuros').value='SELIC puxada do BCB/SGS série 4390 de '+dataInicial+' a '+dataFinal+'. Confira no e-CAC antes de pagar.';
+    showToast('SELIC preenchida: '+soma.toFixed(2)+'%','success');
+  }catch(e){
+    console.error(e);
+    showToast('Não foi possível puxar a SELIC. Preencha manualmente.','error');
+  }
+}
+function renderFaixas(){const box=document.getElementById('faixasBox');if(!box)return;if(!faixasTemp.length){box.innerHTML='<div class="alert alert-info">Nenhuma faixa cadastrada.</div>';return}box.innerHTML=faixasTemp.map((f,i)=>'<div class="list-card"><div class="row"><div class="form-group"><label>Base inicial</label><input class="money-input" id="fx_de_'+i+'" value="'+fmtInput(f.de)+'"></div><div class="form-group"><label>Base final</label><input class="money-input" id="fx_ate_'+i+'" value="'+(f.ate==null?'Acima':fmtInput(f.ate))+'"></div></div><div class="row"><div class="form-group"><label>Alíquota (%)</label><input type="number" step="0.01" id="fx_aliq_'+i+'" value="'+(f.aliq||0)+'"></div><div class="form-group"><label>Parcela a deduzir</label><input class="money-input" id="fx_ded_'+i+'" value="'+fmtInput(f.ded)+'"></div></div><button class="btn btn-danger btn-sm" onclick="removeFaixa('+i+')">Excluir faixa</button></div>').join('');setupMoneyMasks(box)}
+function addFaixa(){faixasTemp.push({de:0,ate:null,aliq:0,ded:0});renderFaixas()}
+function removeFaixa(i){faixasTemp.splice(i,1);renderFaixas()}
+function carregarExemplo2025(){faixasTemp=[{de:0,ate:27110.40,aliq:0,ded:0},{de:27110.41,ate:33919.80,aliq:7.5,ded:2033.28},{de:33919.81,ate:45012.60,aliq:15,ded:4577.27},{de:45012.61,ate:55976.16,aliq:22.5,ded:7953.21},{de:55976.17,ate:null,aliq:27.5,ded:10752.02}];renderFaixas();showToast('Exemplo anual carregado','success')}
+function carregarExemploMensal2025(){faixasTemp=[{de:0,ate:2259.20,aliq:0,ded:0},{de:2259.21,ate:2826.65,aliq:7.5,ded:169.44},{de:2826.66,ate:3751.05,aliq:15,ded:381.44},{de:3751.06,ate:4664.68,aliq:22.5,ded:662.77},{de:4664.69,ate:null,aliq:27.5,ded:896.00}];renderFaixas();showToast('Exemplo mensal carregado','success')}
+function totaisRendimentos(ano){const rs=appData.incomeEntries.filter(r=>+r.ano===+ano);let t={count:rs.length,tributaveis:0,prevOficial:0,irrf:0,dec13:0,irrf13:0,plr:0,isentos:0,exclusiva:0,pendentes:0};rs.forEach(r=>{if(!r.revisado)t.pendentes++;if(r.tipo==='trabalho'){t.tributaveis+=+r.rendTrib||0;t.prevOficial+=+r.prevOficial||0;t.irrf+=+r.irrf||0;t.dec13+=+r.dec13||0;t.irrf13+=+r.irrf13||0;t.plr+=+r.plr||0;t.exclusiva+=+r.dec13||0;t.exclusiva+=+r.plr||0}else if(r.tipo==='isento')t.isentos+=+r.valor||0;else if(r.tipo==='exclusiva')t.exclusiva+=+r.valor||0});appData.assets.filter(b=>+b.ano===+ano).forEach(b=>{t.isentos+=+b.rendIsento||0;t.exclusiva+=+b.rendExclusiva||0});return t}
+function totaisPatrimonio(ano){const bs=appData.assets.filter(b=>+b.ano===+ano);let r={bensAnterior:0,bensAtual:0,dividasAnterior:0,dividasAtual:0,evolucao:0,pendentes:0};bs.forEach(b=>{if(!b.revisado)r.pendentes++;if(b.tipo==='divida'){r.dividasAnterior+=+b.valorAnterior||0;r.dividasAtual+=+b.valorAtual||0}else{r.bensAnterior+=+b.valorAnterior||0;r.bensAtual+=+b.valorAtual||0}});r.evolucao=(r.bensAtual-r.dividasAtual)-(r.bensAnterior-r.dividasAnterior);return r}
+function normalizeFaixas(t){let fx=(t?.faixas||[]).map(f=>({...f,de:+f.de||0,ate:f.ate==null?null:+f.ate,aliq:+f.aliq||0,ded:+f.ded||0})).sort((a,b)=>a.de-b.de);const max=Math.max(...fx.map(f=>f.ate||f.de),0);const pareceMensal=max>0&&max<10000;if(pareceMensal)fx=fx.map(f=>({...f,de:f.de*12,ate:f.ate==null?null:f.ate*12,ded:f.ded*12,_anualizada:true}));return fx}
+function impostoPorTabela(base,t){const fx=normalizeFaixas(t);const faixa=fx.find(f=>base>=f.de&&(f.ate==null||base<=f.ate));if(!faixa)return{imposto:0,faixa:null,faixas:fx};return{imposto:Math.max(0,base*(faixa.aliq/100)-faixa.ded),faixa,faixas:fx}}
+
+function tipoPagamentoLabel(t){return ({medico:'Médico',educacao:'Educação',pensao:'Pensão judicial',prevPrivada:'Previdência privada/PGBL',livroCaixa:'Livro-caixa',outras:'Outras deduções',impostoComplementar:'Imposto complementar/DARF',tributaveis:'Tributáveis',trabalho:'Tributáveis',isento:'Isento',exclusiva:'Tributação exclusiva'}[t]||t||'Pagamento')}
+function pagamentosAno(){return (appData.payments||[]).filter(p=>+p.ano===+activeYear)}
+function renderPagamentos(){
+  const box=document.getElementById('pagamentosList');
+  if(!box)return;
+  const busca=(val('pagBusca')||'').toLowerCase();
+  const filtro=val('pagFiltro');
+  const list=pagamentosAno().filter(p=>(!filtro||p.tipo===filtro)&&(!busca||[p.tipo,p.cliente,p.apelido,p.credor,p.doc,p.valor,p.obs,p.status].join(' ').toLowerCase().includes(busca))).sort((a,b)=>(a.tipo||'').localeCompare(b.tipo||'')||(a.credor||'').localeCompare(b.credor||''));
+  const d=getDeducoesAno(activeYear);
+  const resumo='<div class="grid"><div class="stat blue"><div class="lbl">Médicas</div><div class="val">'+money(d.medicas)+'</div></div><div class="stat blue"><div class="lbl">Educação</div><div class="val">'+money(d.educacao)+'</div></div><div class="stat purple"><div class="lbl">Outras deduções</div><div class="val">'+money(d.pensao+d.prevPrivada+d.livroCaixa+d.outras)+'</div></div><div class="stat green"><div class="lbl">Total pagamentos</div><div class="val">'+money(d.medicas+d.educacao+d.pensao+d.prevPrivada+d.livroCaixa+d.outras+d.impostoComplementar)+'</div></div></div>';
+  box.innerHTML=resumo+(list.length?list.map(renderPagamentoCard).join(''):'<div class="alert alert-info" style="margin-top:12px">Nenhum pagamento cadastrado para '+activeYear+'. Clique em + Novo para adicionar.</div>');
+}
+function renderPagamentoCard(p){
+  const pill=p.status==='revisado'?'<span class="pill green">Revisado</span>':'<span class="pill yellow">Pendente</span>';
+  return '<div class="list-card"><div class="list-top"><div><div class="list-title">'+esc(p.apelido||p.credor||tipoPagamentoLabel(p.tipo))+'</div><div class="list-sub">'+tipoPagamentoLabel(p.tipo)+' • '+esc(p.cliente||'Titular')+' • '+esc(p.doc||'sem CPF/CNPJ')+'</div></div>'+pill+'</div><div class="line-values"><div><strong>Instituição/Credor</strong><span>'+esc(p.credor||'-')+'</span></div><div><strong>Valor</strong><span>'+money(p.valor||0)+'</span></div></div><div class="mini-actions"><button class="btn btn-outline btn-sm" onclick="openPagamentoForm(\''+p.id+'\')">✏️ Editar</button><button class="btn btn-secondary btn-sm" onclick="duplicarPagamento(\''+p.id+'\')">📋 Duplicar</button><button class="btn btn-danger btn-sm" onclick="delItem(\'payments\',\''+p.id+'\',renderPagamentos)">🗑️ Excluir</button></div></div>';
+}
+function openPagamentoForm(id=null){
+  const p=id?(appData.payments||[]).find(x=>x.id===id):{};
+  const body='<div class="row"><div class="form-group"><label>Tipo</label><select id="pg_tipo"><option value="medico">Médico</option><option value="educacao">Educação</option><option value="pensao">Pensão judicial</option><option value="prevPrivada">Previdência privada/PGBL</option><option value="livroCaixa">Livro-caixa</option><option value="outras">Outras deduções</option><option value="impostoComplementar">Imposto complementar/DARF</option></select></div><div class="form-group"><label>Ano</label><input type="number" id="pg_ano" value="'+(p?.ano||activeYear)+'"></div></div><div class="row"><div class="form-group"><label>Cliente/beneficiário</label><select id="pg_cliente">'+beneficiarioOptions(p?.cliente)+'</select></div><div class="form-group"><label>Status</label><select id="pg_status"><option value="pendente">Pendente</option><option value="revisado">Revisado</option></select></div></div><div class="row"><div class="form-group"><label>Apelido / descrição curta</label><input id="pg_apelido" value="'+esc(p?.apelido)+'" placeholder="Ex: Dentista, escola, consulta..."></div><div class="form-group"><label>Instituição/Credor</label><input id="pg_credor" value="'+esc(p?.credor)+'"></div></div><div class="row"><div class="form-group"><label>CNPJ/CPF</label><input id="pg_doc" value="'+esc(p?.doc)+'"></div><div class="form-group"><label>Valor</label><input class="money-input" id="pg_valor" value="'+fmtInput(p?.valor)+'"></div></div><div class="form-group"><label>Descrição/observação</label><textarea id="pg_obs">'+esc(p?.obs)+'</textarea></div>';
+  openModal(id?'Editar pagamento':'Novo pagamento',body,[{label:'Salvar',cls:'btn-primary',action:()=>savePagamento(id)},{label:'Cancelar',cls:'btn-secondary',action:closeModal}]);
+  if(p?.tipo)document.getElementById('pg_tipo').value=p.tipo;
+  document.getElementById('pg_status').value=p?.status||'revisado';
+}
+function savePagamento(id){
+  const obj={id:id||uid('pag'),ano:+val('pg_ano')||activeYear,tipo:val('pg_tipo'),cliente:val('pg_cliente'),status:val('pg_status'),apelido:val('pg_apelido'),credor:val('pg_credor'),doc:val('pg_doc'),valor:parseMoney(val('pg_valor')),obs:val('pg_obs')};
+  if(id)appData.payments=appData.payments.map(x=>x.id===id?obj:x);else appData.payments.push(obj);
+  saveData();closeModal();buildYearSelector();renderPagamentos();showToast('Pagamento salvo','success');
+}
+function duplicarPagamento(id){const p=(appData.payments||[]).find(x=>x.id===id);if(!p)return;appData.payments.push({...p,id:uid('pag'),ano:activeYear,status:'revisado'});saveData();renderPagamentos();showToast('Pagamento duplicado','success')}
+function getDeducoesAno(ano){let legacy=(appData.deductions||[]).find(x=>+x.ano===+ano);let d={ano:+ano,medicas:0,educacao:0,pensao:0,prevPrivada:0,livroCaixa:0,outras:0,impostoComplementar:0,obs:''};if(legacy){['medicas','educacao','pensao','prevPrivada','livroCaixa','outras','impostoComplementar'].forEach(k=>d[k]+=+legacy[k]||0);d.obs=legacy.obs||''}(appData.payments||[]).filter(p=>+p.ano===+ano).forEach(p=>{const v=+p.valor||0;if(p.tipo==='medico')d.medicas+=v;else if(p.tipo==='educacao')d.educacao+=v;else if(p.tipo==='pensao')d.pensao+=v;else if(p.tipo==='prevPrivada')d.prevPrivada+=v;else if(p.tipo==='livroCaixa')d.livroCaixa+=v;else if(p.tipo==='impostoComplementar')d.impostoComplementar+=v;else d.outras+=v});return d}
+function loadDeducoes(){const d=getDeducoesAno(activeYear);['medicas','educacao','pensao','prevPrivada','livroCaixa','outras','impostoComplementar','obs'].forEach(k=>{const el=document.getElementById('ded_'+k);if(el)el.value=k==='obs'?(d[k]||''):money(+d[k]||0)})}
+function salvarDeducoes(){const d=getDeducoesAno(activeYear);['medicas','educacao','pensao','prevPrivada','livroCaixa','outras','impostoComplementar'].forEach(k=>d[k]=parseMoney(val('ded_'+k)));d.obs=val('ded_obs');saveData();calcularERender();showToast('Deduções salvas','success')}
+function calcModelo(ano,modelo,override=null){const rend=override||totaisRendimentos(ano);const tabela=getTabela(ano);if(!tabela)return null;const d=override?{medicas:+override.medicas||0,educacao:+override.educacao||0,pensao:+override.pensao||0,prevPrivada:+override.prevPrivada||0,livroCaixa:+override.livroCaixa||0,outras:+override.outras||0,impostoComplementar:+override.impostoComplementar||0}:getDeducoesAno(ano);const deps=override?.dependentes ?? appData.dependents.length;const dedDep=deps*(+tabela.deducaoDep||0);const limiteEduc=(+tabela.limiteEduc||0)*(deps+1);const educAplicada=Math.min(+d.educacao||0,limiteEduc||(+d.educacao||0));let deducoes=0,descSimpl=0;if(modelo==='simplificado'){descSimpl=Math.min(rend.tributaveis*((+tabela.percDesc||20)/100),+tabela.limiteDesc||0);deducoes=descSimpl}else{deducoes=(+rend.prevOficial||0)+dedDep+educAplicada+(+d.medicas||0)+(+d.pensao||0)+(+d.prevPrivada||0)+(+d.livroCaixa||0)+(+d.outras||0)}const base=Math.max(0,rend.tributaveis-deducoes);const imp=impostoPorTabela(base,tabela);const impostoFinal=Math.max(0,imp.imposto);const pago=(+rend.irrf||0)+(+d.impostoComplementar||0);const resultado=pago-impostoFinal;return{modelo,rend,tabela,dependentes:deps,dedDep,deducoes,descSimpl,educAplicada,base,faixa:imp.faixa,faixas:imp.faixas,impostoFinal,pago,resultado,deducoesDetalhadas:d}}
+function calcularAno(ano,override=null){const tabela=getTabela(ano);const rend=override||totaisRendimentos(ano);const pat=totaisPatrimonio(ano);const simpl=calcModelo(ano,'simplificado',override);const legal=calcModelo(ano,'legal',override);if(!tabela||!simpl||!legal)return{ok:false,tabela,rend,pat};const melhor=simpl.resultado>=legal.resultado?simpl:legal;const escolha=appData.modelChoices?.[ano]||'';const final=escolha==='simplificado'?simpl:escolha==='legal'?legal:melhor;const parcelas=calcularParcelas(Math.max(0,-final.resultado),tabela);return{ok:true,tabela,rend,pat,simpl,legal,melhor,final,escolha:escolha||'auto',parcelas}}
+
+function signedMoney(v){return (v>0?'+':'')+money(v)}
+function diffClass(v){return v>0?'diff-positive':v<0?'diff-negative':'diff-zero'}
+function calcularParcelas(valor,tabela){const qtd=Math.min(8,Math.max(1,+tabela.parcelas||1));if(!valor||qtd<1)return[];const base=valor/qtd;const selic=+tabela.selicAcumulada||0;const fixo=+tabela.acrescimoQuota||0;let arr=[];for(let i=1;i<=qtd;i++){let jurosPct=0;if(i===2)jurosPct=fixo;if(i>=3)jurosPct=selic+fixo;let juros=base*(jurosPct/100);arr.push({n:i,base,jurosPct,juros,total:base+juros})}return arr}
+function calcularERender(){const c=calcularAno(activeYear);const alertas=document.getElementById('calcAlertas'),res=document.getElementById('calcResultado'),mem=document.getElementById('calcMemoria'),parc=document.getElementById('parcelasBox');if(!c.ok){alertas.innerHTML='<div class="alert alert-warn">Cadastre a Tabela IR de '+activeYear+' para calcular.</div>';res.innerHTML='';mem.innerHTML='';parc.innerHTML='';return}let al=[];if(!c.rend.count)al.push('Nenhum rendimento cadastrado para '+activeYear+'.');if(c.rend.pendentes)al.push(c.rend.pendentes+' rendimento(s) pendente(s) de revisão.');if(c.pat.pendentes)al.push(c.pat.pendentes+' bem(ns) pendente(s) de revisão.');if(!c.final.faixa&&c.final.base>0)al.push('Faixa não encontrada para a base de cálculo. Confira a Tabela IR.');alertas.innerHTML=al.map(x=>'<div class="alert alert-warn">⚠️ '+x+'</div>').join('');const r=c.final.resultado;const best=c.melhor.modelo;function modelCard(obj,title){const isBest=obj.modelo===best;const resultadoTxt=obj.resultado!==0?money(Math.abs(obj.resultado)):money(0);return '<div class="model-card '+(c.final.modelo===obj.modelo?'selected ':'')+(isBest?'best':'')+'"><div class="list-title">'+title+'</div><div class="line-values"><div><strong>Deduções</strong><span>'+money(obj.deducoes)+'</span></div><div><strong>Base</strong><span>'+money(obj.base)+'</span></div><div><strong>Imposto</strong><span>'+money(obj.impostoFinal)+'</span></div><div><strong>Pagar/Restituição</strong><span>'+resultadoTxt+'</span></div></div><button class="btn btn-primary btn-sm btn-full" onclick="selecionarModelo(&quot;'+obj.modelo+'&quot;)">Escolher '+(obj.modelo==='simplificado'?'simplificado':'completo')+'</button></div>'}res.innerHTML='<div class="result '+(r>0?'green':r<0?'red':'')+'">'+(r>0?'Restituição estimada: '+money(r):r<0?'Imposto a pagar: '+money(Math.abs(r)):'Sem diferença estimada')+'<small>Modelo concluído: '+(c.final.modelo==='simplificado'?'Desconto simplificado':'Deduções legais')+(c.escolha==='auto'?' • automático mais vantajoso':' • escolhido por você')+'</small></div><div class="model-choice">'+modelCard(c.simpl,'Simplificado')+modelCard(c.legal,'Completo / deduções legais')+'</div><div class="btn-row"><button class="btn btn-outline btn-sm" onclick="selecionarModelo(&quot;auto&quot;)">✨ Usar mais vantajoso automático</button></div>';mem.innerHTML=memoryHTML(c);renderParcelas(c.parcelas,parc)}
+function selecionarModelo(modelo){if(modelo==='auto')delete appData.modelChoices[activeYear];else appData.modelChoices[activeYear]=modelo;saveData();calcularERender();renderInicio();showToast('Modelo de tributação atualizado','success')}
+function memoryHTML(c){const m=c.final;let h='<h4>Rendimentos e imposto</h4>'+mrow('Rendimentos tributáveis',money(c.rend.tributaveis))+mrow('Previdência oficial',money(c.rend.prevOficial))+mrow('IRRF',money(c.rend.irrf))+mrow('13º salário informativo',money(c.rend.dec13))+mrow('IRRF sobre 13º',money(c.rend.irrf13))+mrow('Rendimentos isentos',money(c.rend.isentos))+mrow('Tributação exclusiva',money(c.rend.exclusiva));h+='<h4>Comparação dos modelos</h4>'+mrow('Desconto simplificado aplicado',money(c.simpl.descSimpl))+mrow('Base simplificada',money(c.simpl.base))+mrow('Resultado simplificado',money(c.simpl.resultado))+mrow('Deduções legais',money(c.legal.deducoes))+mrow('Dependentes considerados',c.legal.dependentes)+mrow('Despesas médicas',money(c.legal.deducoesDetalhadas.medicas||0))+mrow('Educação aplicada',money(c.legal.educAplicada||0))+mrow('Pensão judicial',money(c.legal.deducoesDetalhadas.pensao||0))+mrow('Previdência privada/PGBL',money(c.legal.deducoesDetalhadas.prevPrivada||0))+mrow('Livro-caixa',money(c.legal.deducoesDetalhadas.livroCaixa||0))+mrow('Outras deduções',money(c.legal.deducoesDetalhadas.outras||0))+mrow('Base deduções legais',money(c.legal.base))+mrow('Resultado deduções legais',money(c.legal.resultado));h+='<h4>Modelo escolhido</h4>'+mrow('Modelo',m.modelo==='simplificado'?'Simplificado':'Deduções legais')+mrow('Faixa aplicada',m.faixa?(money(m.faixa.de)+' a '+(m.faixa.ate==null?'Acima':money(m.faixa.ate))+' • '+pct(m.faixa.aliq)):'Não encontrada')+mrow('Parcela a deduzir',money(m.faixa?.ded||0))+mrow('Imposto devido',money(m.impostoFinal))+mrow('Imposto pago/retido',money(m.pago))+mrow('Resultado',m.resultado>=0?'Restituição '+money(m.resultado):'A pagar '+money(Math.abs(m.resultado)));h+='<h4>Patrimônio informativo</h4>'+mrow('Bens/contas ano anterior',money(c.pat.bensAnterior))+mrow('Bens/contas ano atual',money(c.pat.bensAtual))+mrow('Dívidas ano anterior',money(c.pat.dividasAnterior))+mrow('Dívidas ano atual',money(c.pat.dividasAtual))+mrow('Evolução patrimonial líquida',money(c.pat.evolucao));if(c.parcelas.length){const total=c.parcelas.reduce((s,p)=>s+p.total,0);h+='<h4>Parcelamento</h4>'+mrow('Quantidade de quotas',c.parcelas.length)+mrow('Primeira quota',money(c.parcelas[0].total))+mrow('Última quota',money(c.parcelas.at(-1).total))+mrow('Total com acréscimos',money(total))+mrow('Acréscimos estimados',money(total-Math.abs(m.resultado)))}return h}
+function mrow(a,b){return '<div class="mrow"><strong>'+a+'</strong><span>'+b+'</span></div>'}
+function renderParcelas(arr,box){if(!arr.length){box.innerHTML='<div class="alert alert-info">Sem imposto a pagar ou parcelamento não configurado.</div>';return}const total=arr.reduce((s,p)=>s+p.total,0);box.innerHTML='<div class="quota-grid">'+arr.map(p=>'<div class="quota-row"><strong>'+p.n+'ª quota</strong><span>'+money(p.total)+' <small>('+pct(p.jurosPct)+' juros)</small></span></div>').join('')+'</div><div class="alert alert-info" style="margin-top:10px">Total estimado com acréscimos: <b>'+money(total)+'</b>. A guia oficial deve ser conferida no e-CAC/Receita.</div>'}
+function renderEvolucoesHTML(c){const ano=activeYear;const rend=totaisRendimentos(ano),rendPrev=totaisRendimentos(ano-1),pat=totaisPatrimonio(ano);const rendaAtual=rend.tributaveis+rend.isentos+rend.exclusiva;const rendaAnterior=rendPrev.tributaveis+rendPrev.isentos+rendPrev.exclusiva;const rendaDelta=rendaAtual-rendaAnterior;const impAtual=c.ok?c.final.pago:rend.irrf;const cPrev=calcularAno(ano-1);const impAnterior=cPrev.ok?cPrev.final.pago:totaisRendimentos(ano-1).irrf;const impDelta=impAtual-impAnterior;const patDelta=pat.evolucao;const clsPat=patDelta>=0?'evo-green':'evo-red';const clsRenda=rendaDelta>=0?'evo-green':'evo-red';const clsImp=impDelta<=0?'evo-green':'evo-red';return '<div class="evolution-carousel"><div class="evolution-track">'+
+'<div class="evolution-card"><div class="evo-top"><div><div class="evo-title">Evolução Patrimonial</div><div class="evo-sub">Bens menos dívidas, comparado ao ano anterior</div></div><span class="pill '+(patDelta>=0?'green':'red')+'">'+(patDelta>=0?'Subiu':'Caiu')+'</span></div><div class="evo-value '+clsPat+'">'+money(patDelta)+'</div><div class="evo-card-line"><strong>Anterior líquido</strong><span>'+money(pat.bensAnterior-pat.dividasAnterior)+'</span></div><div class="evo-card-line"><strong>Atual líquido</strong><span>'+money(pat.bensAtual-pat.dividasAtual)+'</span></div></div>'+ 
+'<div class="evolution-card"><div class="evo-top"><div><div class="evo-title">Evolução de Renda</div><div class="evo-sub">Tributáveis + isentos + exclusiva</div></div><span class="pill '+(rendaDelta>=0?'green':'red')+'">'+(rendaDelta>=0?'Subiu':'Caiu')+'</span></div><div class="evo-value '+clsRenda+'">'+money(rendaDelta)+'</div><div class="evo-card-line"><strong>Ano anterior</strong><span>'+money(rendaAnterior)+'</span></div><div class="evo-card-line"><strong>Ano atual</strong><span>'+money(rendaAtual)+'</span></div></div>'+ 
+'<div class="evolution-card"><div class="evo-top"><div><div class="evo-title">Evolução do Imposto</div><div class="evo-sub">Imposto pago/retido atual vs anterior</div></div><span class="pill '+(impDelta<=0?'green':'red')+'">'+(impDelta<=0?'Pagou menos':'Pagou mais')+'</span></div><div class="evo-value '+clsImp+'">'+money(impDelta)+'</div><div class="evo-card-line"><strong>Ano anterior</strong><span>'+money(impAnterior)+'</span></div><div class="evo-card-line"><strong>Ano atual</strong><span>'+money(impAtual)+'</span></div></div>'+ 
+'</div></div><div class="evolution-dots"><span></span><span></span><span></span></div>'}
+
+function renderInicio(){const c=calcularAno(activeYear);const rend=totaisRendimentos(activeYear),pat=totaisPatrimonio(activeYear);const final=c.ok?c.final:null;document.getElementById('inicioResult').innerHTML=c.ok?'<div class="result '+(final.resultado>0?'green':final.resultado<0?'red':'')+'">'+(final.resultado>0?'Restituição estimada: '+money(final.resultado):final.resultado<0?'Imposto a pagar: '+money(Math.abs(final.resultado)):'Sem diferença estimada')+'<small>'+activeYear+' • '+(final.modelo==='simplificado'?'Simplificado':'Deduções legais')+(c.escolha==='auto'?' • melhor automático':' • escolhido')+'</small></div>':'<div class="alert alert-warn">Cadastre a Tabela IR para calcular '+activeYear+'.</div>';const dedDisplay=c.ok?final.deducoes:getDeducoesAno(activeYear).medicas+getDeducoesAno(activeYear).educacao+getDeducoesAno(activeYear).pensao+getDeducoesAno(activeYear).prevPrivada+getDeducoesAno(activeYear).livroCaixa+getDeducoesAno(activeYear).outras;document.getElementById('dashCards').innerHTML='<div class="stat blue"><div class="lbl">Tributáveis</div><div class="val">'+money(rend.tributaveis)+'</div></div><div class="stat blue"><div class="lbl">Deduções</div><div class="val">'+money(dedDisplay)+'</div></div><div class="stat green"><div class="lbl">Isentos</div><div class="val">'+money(rend.isentos)+'</div></div><div class="stat purple"><div class="lbl">Exclusiva</div><div class="val">'+money(rend.exclusiva)+'</div></div><div class="stat blue"><div class="lbl">Bens atual</div><div class="val">'+money(pat.bensAtual)+'</div></div><div class="stat red"><div class="lbl">Dívidas atual</div><div class="val">'+money(pat.dividasAtual)+'</div></div><div class="stat yellow"><div class="lbl">Rendimentos</div><div class="val">'+rend.count+'</div></div><div class="stat yellow"><div class="lbl">Bens</div><div class="val">'+bensAno().length+'</div></div>';let msgs=[];if(!appData.dados.nome)msgs.push('Preencha os dados do titular.');if(!rend.count)msgs.push('Cadastre os rendimentos do ano.');if(!getTabela(activeYear))msgs.push('Cadastre a Tabela IR do ano.');if(c.ok&&c.escolha==='auto')msgs.push('O app encontrou o modelo mais vantajoso automaticamente. Você ainda pode escolher manualmente na aba Cálculo.');if(rend.pendentes)msgs.push('Há rendimentos pendentes de revisão.');if(pat.pendentes)msgs.push('Há bens pendentes de revisão.');if(!msgs.length)msgs.push('Tudo parece encaminhado para '+activeYear+'.');document.getElementById('smartSummary').innerHTML=msgs.map(x=>'<div class="alert '+(x.startsWith('Tudo')?'alert-success':'alert-warn')+'">'+x+'</div>').join('');document.getElementById('evolucoesMini').innerHTML=renderEvolucoesHTML(c);renderChecklistAuto(c)}
+function renderChecklistAuto(c){const rend=totaisRendimentos(activeYear),pat=totaisPatrimonio(activeYear);const items=[['Dados do titular',!!appData.dados.nome],['Tabela IR cadastrada',!!getTabela(activeYear)],['Rendimentos lançados',rend.count>0],['Previdência oficial conferida',rend.prevOficial>=0],['Dependentes conferidos',true],['Bens/contas atualizados',bensAno().length>0],['Cálculo conferido',!!c.ok],['Backup recomendado',true]];document.getElementById('checklistAuto').innerHTML=items.map(i=>'<label class="checklist-item '+(i[1]?'done':'')+'" style="display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--gray-100);font-weight:800"><span>'+(i[1]?'✅':'⬜')+'</span><span>'+i[0]+'</span></label>').join('')}
+function executarSimulacao(){const extraDed=parseMoney(val('sim_outrasDed'));const rend={tributaveis:parseMoney(val('sim_rend')),prevOficial:parseMoney(val('sim_prev')),irrf:parseMoney(val('sim_irrf')),dec13:0,irrf13:0,plr:0,isentos:parseMoney(val('sim_isentos')),exclusiva:parseMoney(val('sim_exclusiva')),count:1,pendentes:0,dependentes:+val('sim_deps')||0,medicas:parseMoney(val('sim_medicas')),educacao:parseMoney(val('sim_educacao')),pensao:extraDed,prevPrivada:0,livroCaixa:0,outras:0,impostoComplementar:parseMoney(val('sim_impComp'))};const c=calcularAno(activeYear,rend);if(!c.ok){document.getElementById('simResultado').innerHTML='<div class="alert alert-warn">Cadastre a Tabela IR primeiro.</div>';return}document.getElementById('simResultado').innerHTML='<div class="card"><div class="card-title">Resultado da simulação</div><div class="result '+(c.final.resultado>0?'green':c.final.resultado<0?'red':'')+'">'+(c.final.resultado>0?'Restituição: '+money(c.final.resultado):c.final.resultado<0?'A pagar: '+money(Math.abs(c.final.resultado)):'Sem diferença')+'<small>Modelo: '+(c.final.modelo==='simplificado'?'Simplificado':'Deduções legais')+'</small></div><div class="model-choice"><div class="model-card '+(c.melhor.modelo==='simplificado'?'best':'')+'"><div class="list-title">Simplificado</div><div class="line-values"><div><strong>Resultado</strong><span>'+money(c.simpl.resultado)+'</span></div><div><strong>Deduções</strong><span>'+money(c.simpl.deducoes)+'</span></div></div></div><div class="model-card '+(c.melhor.modelo==='legal'?'best':'')+'"><div class="list-title">Completo</div><div class="line-values"><div><strong>Resultado</strong><span>'+money(c.legal.resultado)+'</span></div><div><strong>Deduções</strong><span>'+money(c.legal.deducoes)+'</span></div></div></div></div><div class="memory">'+memoryHTML(c)+'</div></div>'}
+function salvarSimulacao(){const html=document.getElementById('simResultado').innerText;if(!html.trim()){showToast('Execute uma simulação primeiro','error');return}appData.simulations.push({id:uid('sim'),ano:activeYear,date:new Date().toLocaleString('pt-BR'),texto:html.slice(0,700)});saveData();renderSimulacoes();showToast('Simulação salva','success')}
+function renderSimulacoes(){document.getElementById('simHistorico').innerHTML=appData.simulations.filter(s=>+s.ano===+activeYear).slice(-10).reverse().map(s=>'<div class="list-card"><div class="list-title">'+s.date+'</div><div class="compact-note">'+esc(s.texto)+'</div></div>').join('')||'<div class="alert alert-info">Nenhuma simulação salva.</div>'}
+function registrarHistorico(){const c=calcularAno(activeYear);if(!c.ok){showToast('Calcule o ano antes','error');return}const rendaTotal=c.rend.tributaveis+c.rend.isentos+c.rend.exclusiva;const liquido=c.pat.bensAtual-c.pat.dividasAtual;const liquidoAnt=c.pat.bensAnterior-c.pat.dividasAnterior;appData.history=appData.history.filter(h=>+h.ano!==+activeYear);appData.history.push({ano:activeYear,date:new Date().toLocaleString('pt-BR'),resultado:c.final.resultado,tributaveis:c.rend.tributaveis,isentos:c.rend.isentos,exclusiva:c.rend.exclusiva,deducoes:c.final.deducoes,bens:c.pat.bensAtual,dividas:c.pat.dividasAtual,evolucaoPatrimonial:liquido-liquidoAnt,rendaTotal,impostoPago:c.final.pago,modelo:c.final.modelo});saveData();renderHistorico();showToast('Histórico registrado','success')}
+function renderHistorico(){const box=document.getElementById('historicoList');const list=[...appData.history].sort((a,b)=>b.ano-a.ano);box.innerHTML=list.map(h=>{const evo=+h.evolucaoPatrimonial||0;return '<div class="list-card"><div class="list-top"><div><div class="list-title">'+h.ano+'</div><div class="list-sub">'+h.date+' • '+(h.modelo==='legal'?'Deduções legais':'Simplificado')+'</div></div><span class="pill '+(h.resultado>=0?'green':'red')+'">'+money(h.resultado)+'</span></div><div class="line-values"><div><strong>Tributáveis</strong><span>'+money(h.tributaveis)+'</span></div><div><strong>Deduções</strong><span>'+money(h.deducoes||0)+'</span></div><div><strong>Isentos</strong><span>'+money(h.isentos||0)+'</span></div><div><strong>Exclusiva</strong><span>'+money(h.exclusiva||0)+'</span></div><div><strong>Bens</strong><span>'+money(h.bens||0)+'</span></div><div><strong>Dívidas</strong><span>'+money(h.dividas||0)+'</span></div><div><strong>Evolução patrimônio</strong><span class="'+(evo>=0?'evo-green':'evo-red')+'">'+money(evo)+'</span></div><div><strong>Imposto pago</strong><span>'+money(h.impostoPago||0)+'</span></div></div></div>'}).join('')||'<div class="alert alert-info">Sem histórico registrado.</div>';drawChart(list)}
+function drawChart(list){
+  const cv=document.getElementById('chart');
+  if(!cv)return;
+  const box=cv.parentElement;
+  const cssW=Math.max(280, Math.floor((box?.clientWidth||cv.getBoundingClientRect().width||320)-18));
+  const cssH=190;
+  const dpr=window.devicePixelRatio||1;
+  cv.style.width='100%';
+  cv.style.height=cssH+'px';
+  cv.width=Math.floor(cssW*dpr);
+  cv.height=Math.floor(cssH*dpr);
+  const ctx=cv.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,cssW,cssH);
+  ctx.font='11px '+(getComputedStyle(document.body).fontFamily||'Arial');
+  ctx.lineWidth=2;
+  ctx.strokeStyle='#2675bd';
+  ctx.fillStyle='#6b7280';
+  if(!list.length){
+    ctx.fillText('Sem dados para gráfico.', 14, 28);
+    return;
+  }
+  list=[...list].sort((a,b)=>(+a.ano||0)-(+b.ano||0));
+  const vals=list.map(x=>Math.max(0,+x.bens||0));
+  const max=Math.max(...vals,1);
+  const padL=34,padR=14,padT=16,padB=30;
+  ctx.beginPath();
+  list.forEach((x,i)=>{
+    const denom=Math.max(1,list.length-1);
+    const px=padL+i*(cssW-padL-padR)/denom;
+    const py=cssH-padB-((Math.max(0,+x.bens||0))/max)*(cssH-padT-padB);
+    if(i)ctx.lineTo(px,py);else ctx.moveTo(px,py);
+  });
+  ctx.stroke();
+  list.forEach((x,i)=>{
+    const denom=Math.max(1,list.length-1);
+    const px=padL+i*(cssW-padL-padR)/denom;
+    const py=cssH-padB-((Math.max(0,+x.bens||0))/max)*(cssH-padT-padB);
+    ctx.beginPath();ctx.arc(px,py,3,0,Math.PI*2);ctx.fillStyle='#2675bd';ctx.fill();
+    ctx.fillStyle='#6b7280';ctx.fillText(String(x.ano),Math.max(4,px-12),cssH-9);
+  });
+}
+function openNotaForm(id=null){const n=id?appData.notes.find(x=>x.id===id):{};const body='<div class="form-group"><label>Título</label><input id="n_titulo" value="'+esc(n?.titulo)+'"></div><div class="row"><div class="form-group"><label>Status</label><select id="n_status"><option value="pendente">Pendente</option><option value="andamento">Em andamento</option><option value="resolvido">Resolvido</option></select></div><div class="form-group"><label>Prioridade</label><select id="n_prioridade"><option value="baixa">Baixa</option><option value="media">Média</option><option value="alta">Alta</option></select></div></div><div class="form-group"><label>Texto</label><textarea id="n_texto">'+esc(n?.texto)+'</textarea></div>';openModal(id?'Editar anotação':'Nova anotação',body,[{label:'Salvar',cls:'btn-primary',action:()=>saveNota(id)},{label:'Cancelar',cls:'btn-secondary',action:closeModal}]);if(n?.status)document.getElementById('n_status').value=n.status;if(n?.prioridade)document.getElementById('n_prioridade').value=n.prioridade}
+function saveNota(id){const n={id:id||uid('nota'),ano:activeYear,titulo:val('n_titulo'),status:val('n_status'),prioridade:val('n_prioridade'),texto:val('n_texto'),date:new Date().toLocaleString('pt-BR')};if(id)appData.notes=appData.notes.map(x=>x.id===id?n:x);else appData.notes.push(n);saveData();closeModal();renderNotas();updateNotaBadge()}
+function renderNotas(){const box=document.getElementById('notasList');if(!box)return;const busca=(val('notaBusca')||'').toLowerCase(),f=val('notaFiltro');let list=appData.notes.filter(n=>(!n.ano||+n.ano===+activeYear)&&(!f||n.status===f)&&(!busca||[n.titulo,n.texto].join(' ').toLowerCase().includes(busca)));box.innerHTML=list.map(n=>'<div class="list-card"><div class="list-top"><div><div class="list-title">'+esc(n.titulo||'Sem título')+'</div><div class="list-sub">'+n.status+' • '+n.prioridade+' • '+n.date+'</div></div></div><p class="compact-note" style="margin:8px 0">'+esc(n.texto)+'</p><div class="mini-actions"><button class="btn btn-outline btn-sm" onclick="openNotaForm(\''+n.id+'\')">Editar</button><button class="btn btn-danger btn-sm" onclick="delItem(\'notes\',\''+n.id+'\',renderNotas)">Excluir</button><button class="btn btn-secondary btn-sm" onclick="openNotaForm()">Nova</button></div></div>').join('')||'<div class="alert alert-info">Nenhuma anotação.</div>'}
+function updateNotaBadge(){const n=appData.notes.filter(x=>x.status!=='resolvido').length,b=document.getElementById('notaBadge');b.textContent=n>9?'9+':n;b.style.display=n?'flex':'none'}
+function loadAjustes(){document.getElementById('cfg_tema').value=appData.settings.tema;document.getElementById('cfg_fonte').value=appData.settings.fonte;document.getElementById('cfg_centavos').value=appData.settings.centavos}
+function salvarAjustes(){['tema','fonte','centavos'].forEach(k=>appData.settings[k]=val('cfg_'+k));saveData();applySettings();showToast('Ajustes salvos','success');renderAll()}
+function copiarMemoria(){navigator.clipboard?.writeText(document.getElementById('calcMemoria').innerText);showToast('Memória copiada','success')}
+function download(name,content,type='text/plain'){const blob=content instanceof Blob?content:new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(url);a.remove()},1500)}
+function exportarTXT(){const c=calcularAno(activeYear);download('memoria-ir-'+activeYear+'.txt',document.getElementById('calcMemoria').innerText||JSON.stringify(c,null,2))}
+function exportarJSON(){const payload={exportedAt:new Date().toISOString(),app:'Leão Domado IR 3.4',activeYear,dados:appData.dados,resumo:calcularAno(activeYear),data:appData};download('backup-leao-domado-ir-'+activeYear+'.json',JSON.stringify(payload,null,2),'application/json')}
+function importarJSON(ev){const file=ev.target.files[0];if(!file)return;const rd=new FileReader();rd.onload=()=>{try{const j=JSON.parse(rd.result);appData=j.data||j;normalizeData();saveData();renderAll();showToast('Backup restaurado','success')}catch(e){showToast('Arquivo inválido','error')}};rd.readAsText(file)}
+function exportarCSV(){const c=calcularAno(activeYear);const rows=[['ano','tributaveis','irrf','isentos','exclusiva','bens_atual','dividas_atual','resultado'],[activeYear,c.rend?.tributaveis||0,c.rend?.irrf||0,c.rend?.isentos||0,c.rend?.exclusiva||0,c.pat?.bensAtual||0,c.pat?.dividasAtual||0,c.final?.resultado||0]];download('resumo-ir-'+activeYear+'.csv',rows.map(r=>r.join(';')).join('\n'),'text/csv')}
+function exportarTXTBackup(){showToast('Resumo TXT foi substituído pelo PDF Resumo','error')}
+
+function labelCampo(k){return ({nome:'Nome',cpf:'CPF',nascimento:'Data de nascimento',email:'E-mail',telefone:'Telefone',cep:'CEP',endereco:'Endereço',numero:'Número',complemento:'Complemento',bairro:'Bairro',cidade:'Cidade',uf:'UF',natureza:'Natureza da ocupação',ocupacao:'Ocupação principal',residente:'Residente no Brasil',doenca:'Doença grave/deficiência'}[k]||k)}
+function linhaCampos(obj,cmap){return Object.entries(cmap).map(([k,label])=>label+': '+(obj?.[k]??'')).join(' | ')}
+function resumoCompletoTexto(){
+  const c=calcularAno(activeYear);
+  const d=getDeducoesAno(activeYear);
+  const pat=totaisPatrimonio(activeYear);
+  const linhas=[];
+  linhas.push('LEÃO DOMADO IR - PDF RESUMO COMPLETO PARA DECLARAÇÃO');
+  linhas.push('Ano-calendário selecionado: '+activeYear);
+  linhas.push('Gerado em: '+new Date().toLocaleString('pt-BR'));
+  linhas.push('');
+  linhas.push('============================================================');
+  linhas.push('1. DADOS DO TITULAR');
+  linhas.push('============================================================');
+  Object.entries(appData.dados||{}).forEach(([k,v])=>linhas.push(labelCampo(k)+': '+(v||'')));
+  linhas.push('');
+  linhas.push('============================================================');
+  linhas.push('2. DEPENDENTES / CÔNJUGE');
+  linhas.push('============================================================');
+  if((appData.dependents||[]).length){
+    (appData.dependents||[]).forEach((x,i)=>{
+      linhas.push('Dependente '+(i+1));
+      linhas.push('Nome: '+(x.nome||''));
+      linhas.push('CPF: '+(x.cpf||''));
+      linhas.push('Nascimento: '+(x.nascimento||''));
+      linhas.push('Tipo: '+(x.tipo||''));
+      linhas.push('E-mail: '+(x.email||''));
+      linhas.push('Celular: '+(x.celular||''));
+      linhas.push('Mora com titular: '+(x.mora||''));
+      linhas.push('');
+    });
+  }else linhas.push('Sem dependentes cadastrados.');
+  linhas.push('');
+  linhas.push('============================================================');
+  linhas.push('3. RENDIMENTOS DO ANO '+activeYear);
+  linhas.push('============================================================');
+  const rends=(appData.incomeEntries||[]).filter(x=>+x.ano===+activeYear);
+  if(rends.length){
+    rends.forEach((r,i)=>{
+      linhas.push('Rendimento '+(i+1));
+      linhas.push('Tipo: '+tipoPagamentoLabel(r.tipo==='trabalho'?'tributaveis':r.tipo));
+      linhas.push('Beneficiário: '+(r.beneficiario||''));
+      linhas.push('Status: '+(r.revisado===false?'Pendente':'Revisado'));
+      linhas.push('Fonte pagadora / instituição: '+(r.fonte||''));
+      linhas.push('CNPJ/CPF: '+(r.cnpj||''));
+      linhas.push('Natureza: '+(r.natureza||''));
+      linhas.push('Rendimentos tributáveis: '+money(r.rendTrib||0));
+      linhas.push('Contribuição previdenciária oficial: '+money(r.prevOficial||0));
+      linhas.push('IRRF: '+money(r.irrf||0));
+      linhas.push('13º salário: '+money(r.dec13||0));
+      linhas.push('IRRF sobre 13º: '+money(r.irrf13||0));
+      linhas.push('PLR: '+money(r.plr||0));
+      linhas.push('Valor informado: '+money(r.valor||0));
+      linhas.push('Observações: '+(r.obs||''));
+      linhas.push('');
+    });
+  }else linhas.push('Nenhum rendimento cadastrado para este ano.');
+  linhas.push('Totais do ano: Tributáveis '+money(c.rend?.tributaveis||0)+' | IRRF '+money(c.rend?.irrf||0)+' | Previdência oficial '+money(c.rend?.prevOficial||0)+' | 13º '+money(c.rend?.dec13||0)+' | Isentos '+money(c.rend?.isentos||0)+' | Tributação exclusiva '+money(c.rend?.exclusiva||0));
+  linhas.push('');
+  linhas.push('============================================================');
+  linhas.push('4. PAGAMENTOS / DEDUÇÕES DO ANO '+activeYear);
+  linhas.push('============================================================');
+  const pags=(appData.payments||[]).filter(x=>+x.ano===+activeYear);
+  if(pags.length){
+    pags.forEach((p,i)=>{
+      linhas.push('Pagamento '+(i+1));
+      linhas.push('Tipo: '+tipoPagamentoLabel(p.tipo));
+      linhas.push('Cliente/beneficiário: '+(p.cliente||''));
+      linhas.push('Status: '+(p.status||''));
+      linhas.push('Apelido/descrição curta: '+(p.apelido||''));
+      linhas.push('Instituição/credor: '+(p.credor||''));
+      linhas.push('CNPJ/CPF: '+(p.doc||''));
+      linhas.push('Valor: '+money(p.valor||0));
+      linhas.push('Descrição/observação: '+(p.obs||''));
+      linhas.push('');
+    });
+  }else linhas.push('Nenhum pagamento cadastrado para este ano.');
+  linhas.push('Totais deduções: Médicas '+money(d.medicas)+' | Educação '+money(d.educacao)+' | Pensão judicial '+money(d.pensao)+' | PGBL '+money(d.prevPrivada)+' | Livro-caixa '+money(d.livroCaixa)+' | Outras '+money(d.outras)+' | DARF/imposto complementar '+money(d.impostoComplementar));
+  linhas.push('');
+  linhas.push('============================================================');
+  linhas.push('5. BENS, CONTAS, INVESTIMENTOS, DÍVIDAS E FINANCIAMENTOS DO ANO '+activeYear);
+  linhas.push('============================================================');
+  const bens=(appData.assets||[]).filter(x=>+x.ano===+activeYear);
+  if(bens.length){
+    bens.forEach((b,i)=>{
+      linhas.push('Item patrimonial '+(i+1));
+      linhas.push('Tipo: '+(b.tipo||''));
+      linhas.push('Proprietário: '+(b.proprietario||''));
+      linhas.push('Status: '+(b.revisado===false?'Pendente':'Revisado'));
+      linhas.push('Apelido/Nome: '+(b.nome||''));
+      linhas.push('Instituição/credor: '+(b.instituicao||''));
+      linhas.push('CNPJ/CPF: '+(b.cnpj||''));
+      linhas.push('Código/placa/conta/matrícula: '+(b.codigo||''));
+      linhas.push('Informação extra 1: '+(b.extra1||''));
+      linhas.push('Informação extra 2: '+(b.extra2||''));
+      linhas.push('Valor em 31/12 ano anterior: '+money(b.valorAnterior||0));
+      linhas.push('Valor em 31/12 ano atual: '+money(b.valorAtual||0));
+      linhas.push('Rendimento isento vinculado: '+money(b.rendIsento||0));
+      linhas.push('Rendimento tributação exclusiva vinculado: '+money(b.rendExclusiva||0));
+      linhas.push('Observações: '+(b.obs||''));
+      linhas.push('');
+    });
+  }else linhas.push('Nenhum bem, conta, investimento ou dívida cadastrado para este ano.');
+  linhas.push('Resumo patrimonial: Bens/contas ano anterior '+money(pat.bensAnterior)+' | Bens/contas ano atual '+money(pat.bensAtual)+' | Dívidas ano anterior '+money(pat.dividasAnterior)+' | Dívidas ano atual '+money(pat.dividasAtual)+' | Evolução líquida '+money(pat.evolucao));
+  linhas.push('');
+  linhas.push('============================================================');
+  linhas.push('6. TABELA IR E PARCELAMENTO');
+  linhas.push('============================================================');
+  const t=getTabela(activeYear);
+  if(t){
+    linhas.push('Ano-calendário: '+(t.ano||''));
+    linhas.push('Exercício: '+(t.exercicio||''));
+    linhas.push('Desconto simplificado: '+(t.percDesc||0)+'% | Limite: '+money(t.limiteDesc||0));
+    linhas.push('Dedução por dependente: '+money(t.deducaoDep||0)+' | Limite educação por pessoa: '+money(t.limiteEduc||0));
+    linhas.push('Parcelas: '+(t.parcelas||1)+' | SELIC acumulada estimada: '+(t.selicAcumulada||0)+'% | Acréscimo quota: '+(t.acrescimoQuota||0)+'%');
+    linhas.push('Observação juros: '+(t.obsJuros||''));
+    linhas.push('Observações tabela: '+(t.obs||''));
+    linhas.push('Faixas:');
+    (t.faixas||[]).forEach((f,i)=>linhas.push((i+1)+'. De '+money(f.de||0)+' até '+(f.ate==null?'Acima':money(f.ate))+' | Alíquota '+(f.aliq||0)+'% | Dedução '+money(f.ded||0)));
+  }else linhas.push('Tabela IR não cadastrada para este ano.');
+  linhas.push('');
+  linhas.push('============================================================');
+  linhas.push('7. RESUMO DO CÁLCULO');
+  linhas.push('============================================================');
+  if(c.ok){
+    linhas.push('Modelo final: '+(c.final.modelo==='legal'?'Completo / deduções legais':'Simplificado'));
+    linhas.push('Modelo escolhido: '+(c.escolha==='auto'?'Mais vantajoso automático':c.escolha));
+    linhas.push('Simplificado - deduções: '+money(c.simpl.deducoes)+' | base: '+money(c.simpl.base)+' | imposto: '+money(c.simpl.impostoFinal)+' | resultado: '+(c.simpl.resultado>=0?'Restituição ':'A pagar ')+money(Math.abs(c.simpl.resultado)));
+    linhas.push('Completo - deduções: '+money(c.legal.deducoes)+' | base: '+money(c.legal.base)+' | imposto: '+money(c.legal.impostoFinal)+' | resultado: '+(c.legal.resultado>=0?'Restituição ':'A pagar ')+money(Math.abs(c.legal.resultado)));
+    linhas.push('Tributáveis: '+money(c.rend.tributaveis));
+    linhas.push('Isentos: '+money(c.rend.isentos));
+    linhas.push('Exclusiva: '+money(c.rend.exclusiva));
+    linhas.push('Deduções usadas: '+money(c.final.deducoes));
+    linhas.push('Base: '+money(c.final.base));
+    linhas.push('Imposto devido: '+money(c.final.impostoFinal));
+    linhas.push('Imposto pago/retido: '+money(c.final.pago));
+    linhas.push('Resultado final: '+(c.final.resultado>=0?'Restituição ':'A pagar ')+money(Math.abs(c.final.resultado)));
+  }else linhas.push('Tabela IR não cadastrada para cálculo.');
+  linhas.push('');
+  linhas.push('============================================================');
+  linhas.push('8. HISTÓRICO E ANOTAÇÕES');
+  linhas.push('============================================================');
+  linhas.push('Histórico registrado:');
+  (appData.history||[]).sort((a,b)=>(+b.ano||0)-(+a.ano||0)).forEach(h=>linhas.push('Ano '+h.ano+' | Data '+(h.date||'')+' | Tributáveis '+money(h.tributaveis||0)+' | Deduções '+money(h.deducoes||0)+' | Isentos '+money(h.isentos||0)+' | Exclusiva '+money(h.exclusiva||0)+' | Bens '+money(h.bens||0)+' | Dívidas '+money(h.dividas||0)+' | Evolução patrimônio '+money(h.evolucaoPatrimonial||0)+' | Imposto pago '+money(h.impostoPago||0)+' | Resultado '+money(h.resultado||0)));
+  linhas.push('');
+  linhas.push('Anotações:');
+  (appData.notes||[]).filter(n=>!n.ano||+n.ano===+activeYear).forEach((n,i)=>linhas.push((i+1)+'. '+(n.titulo||'Sem título')+' | '+(n.status||'')+' | '+(n.prioridade||'')+' | '+(n.texto||'')));
+  return linhas.join('\n');
+}
+function makeSimplePDF(text){const escpdf=t=>String(t).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[–—]/g,'-').replace(/[“”]/g,'"').replace(/[’]/g,"'").replace(/[^\x09\x0A\x0D\x20-\x7E]/g,'').replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)');const lines=text.split('\n');const pages=[];for(let i=0;i<lines.length;i+=48)pages.push(lines.slice(i,i+48));let objects=[];function obj(body){objects.push(body);return objects.length}obj('<< /Type /Catalog /Pages 2 0 R >>');obj('PAGES_PLACEHOLDER');obj('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>');let pageNums=[];pages.forEach(pg=>{let stream='BT /F1 10 Tf 50 790 Td 12 TL ';pg.forEach(line=>{stream+='('+escpdf(line.slice(0,105))+') Tj T* '});stream+='ET';let contentNum=obj('<< /Length '+stream.length+' >>\nstream\n'+stream+'\nendstream');let pageNum=obj('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents '+contentNum+' 0 R >>');pageNums.push(pageNum)});objects[1]='<< /Type /Pages /Kids ['+pageNums.map(n=>n+' 0 R').join(' ')+'] /Count '+pageNums.length+' >>';let pdf='%PDF-1.4\n';let offsets=[0];objects.forEach((body,i)=>{offsets.push(pdf.length);pdf+=(i+1)+' 0 obj\n'+body+'\nendobj\n'});let xref=pdf.length;pdf+='xref\n0 '+(objects.length+1)+'\n0000000000 65535 f \n';offsets.slice(1).forEach(off=>pdf+=String(off).padStart(10,'0')+' 00000 n \n');pdf+='trailer << /Size '+(objects.length+1)+' /Root 1 0 R >>\nstartxref\n'+xref+'\n%%EOF';return pdf}
+function exportarPDFResumo(){const pdf=makeSimplePDF(resumoCompletoTexto());download('resumo-leao-domado-ir-'+activeYear+'.pdf',pdf,'application/pdf')}
+
+function limparDados(k){if(!confirm('Limpar '+k+'?'))return;appData[k]=[];saveData();renderAll();showToast('Dados limpos','success')}
+function limparTudo(){if(!confirm('Apagar todos os dados do app?'))return;localStorage.removeItem(KEY);appData=defaultData();saveData();renderAll()}
+function renderParcelasFromCalc(){calcularERender()}
+let deferredInstallPrompt=null;
+function updateInstallButtons(show){document.querySelectorAll('#installBtn,#authInstallBtn,#installAppBtnSettings').forEach(btn=>{if(btn)btn.classList.toggle('show',!!show)});}
+window.leaoInstallApp=async function(){if(!deferredInstallPrompt){const msg=document.getElementById('authMsg');if(msg)msg.textContent='O Chrome ainda não liberou a instalação. Hospede em HTTPS e aguarde o navegador reconhecer o PWA.';showToast('Instalação ainda não disponível','error');return}deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice.catch(()=>{});deferredInstallPrompt=null;updateInstallButtons(false)};
+function initPWA(){try{const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#1f5f9f"/><text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-size="260">🦁</text><text x="50%" y="84%" text-anchor="middle" font-family="Arial" font-size="58" font-weight="900" fill="#f4c95d">IR</text></svg>';const icon='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);const manifest={name:'Leão Domado IR',short_name:'Leão Domado',start_url:'./index.html',scope:'./',display:'standalone',display_override:['standalone','minimal-ui'],background_color:'#f8fafc',theme_color:'#1f5f9f',orientation:'portrait',description:'Controle anual do Imposto de Renda familiar',icons:[{src:icon,sizes:'192x192',type:'image/svg+xml',purpose:'any maskable'},{src:icon,sizes:'512x512',type:'image/svg+xml',purpose:'any maskable'}]};const link=document.createElement('link');link.rel='manifest';link.href=URL.createObjectURL(new Blob([JSON.stringify(manifest)],{type:'application/manifest+json'}));document.head.appendChild(link);if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;updateInstallButtons(true);const msg=document.getElementById('authMsg');if(msg)msg.textContent='App pronto para instalar pelo Chrome.'});window.addEventListener('appinstalled',()=>{deferredInstallPrompt=null;updateInstallButtons(false);showToast('App instalado','success')});}catch(e){console.warn('PWA indisponível',e)}}
+
+window.leaoDomadoGetData=function(){return appData};
+window.leaoDomadoSetData=function(cloudData){try{appData={...defaultData(),...(cloudData||{})};normalizeData();localStorage.setItem(KEY,JSON.stringify(appData));renderAll();showToast('Dados sincronizados do Firebase','success')}catch(e){console.error(e);showToast('Erro ao aplicar dados da nuvem','error')}};
+window.leaoDomadoLocalSave=function(){localStorage.setItem(KEY,JSON.stringify(appData))};
+
+
+window.leaoApplyCloudData=function(cloudData,cloudYear){if(!cloudData)return;try{appData={...defaultData(),...cloudData};normalizeData();activeYear=cloudYear||activeYear;localStorage.setItem(KEY,JSON.stringify(appData));buildYearSelector();renderAll();showToast('Dados sincronizados com Firebase','success')}catch(e){console.error(e);showToast('Erro ao sincronizar dados','error')}};
+loadData();buildYearSelector();setupMoneyMasks();initPWA();renderAll();
+
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA3-K3hc9JdytBHhYjl86b96bd3VO-XpOk",
+  authDomain: "leaodomado-5cff1.firebaseapp.com",
+  projectId: "leaodomado-5cff1",
+  storageBucket: "leaodomado-5cff1.firebasestorage.app",
+  messagingSenderId: "389448138993",
+  appId: "1:389448138993:web:abbfad25a0c0673e25a950"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const auth = getAuth(fbApp);
+const db = getFirestore(fbApp);
+const provider = new GoogleAuthProvider();
+provider.setCustomParameters({ prompt: 'select_account' });
+let currentUser = null;
+let saveTimer = null;
+const $ = id => document.getElementById(id);
+function appDocRef(uid){ return doc(db, 'users', uid, 'appData', 'main'); }
+function showAuthError(msg){ const el=$('authError'); if(el){ el.textContent=msg; el.classList.add('show'); } const m=$('authMsg'); if(m) m.textContent=msg; }
+function clearAuthError(){ const el=$('authError'); if(el){ el.textContent=''; el.classList.remove('show'); } }
+function showBadge(msg, timeout=2200){ const b=$('cloudStatusBadge'); if(!b)return; b.textContent=msg; b.classList.add('show'); if(timeout) setTimeout(()=>b.classList.remove('show'),timeout); }
+function setAccount(user){ if($('authName')) $('authName').textContent=user?.displayName||user?.email||'Logado'; if($('authAvatar')) $('authAvatar').textContent=(user?.displayName||user?.email||'L').trim().charAt(0).toUpperCase(); document.querySelectorAll('#authUserEmail').forEach(el=>el.textContent=user?.email||user?.displayName||'Usuário conectado'); }
+async function loadCloudData(user){ const snap=await getDoc(appDocRef(user.uid)); if(snap.exists() && snap.data()?.payload){ window.leaoApplyCloudData?.(snap.data().payload, snap.data().activeYear); } else { await saveCloudData(window.appData, window.activeYear, true); } }
+async function saveCloudData(data, year, immediate=false){ if(!currentUser||!data)return; const run=async()=>{ await setDoc(appDocRef(currentUser.uid), { payload: JSON.parse(JSON.stringify(data)), activeYear: year, updatedAt: serverTimestamp(), app:'Leão Domado IR', appVersion:'3.4' }, { merge:true }); }; if(immediate) return run(); clearTimeout(saveTimer); saveTimer=setTimeout(()=>run().catch(e=>{console.error(e);showBadge('Não foi possível salvar na nuvem',2600)}),800); }
+window.leaoFirebase={ isReady:()=>!!currentUser, saveAppData:(data,year)=>saveCloudData(data,year), logout:()=>signOut(auth) };
+window.leaoLoginGoogle=async function(){ clearAuthError(); try{ showBadge('Abrindo login do Google...',0); await signInWithPopup(auth,provider); }catch(e){ console.error(e); showAuthError('Falha no login com Google: '+(e.code||e.message)); showBadge('Falha no login',2200); } };
+window.leaoLogout=async function(){ try{ await signOut(auth); }catch(e){ console.error(e); showBadge('Não foi possível sair',2200); } };
+$('googleLoginBtn')?.addEventListener('click',()=>window.leaoLoginGoogle());
+
+onAuthStateChanged(auth, async (user)=>{
+  currentUser=user;
+  if(user){
+    setAccount(user);
+    $('authScreen')?.classList.add('hidden');
+    $('authStatus')?.classList.add('show');
+    $('logoutBtn')?.classList.add('show');
+    showBadge('Sincronizando Firebase...',0);
+    try{ await loadCloudData(user); showBadge('Firebase sincronizado'); window.saveData?.(); }
+    catch(e){ console.error(e); showAuthError('Login feito, mas o Firestore não carregou. Confira as regras do banco.'); showBadge('Erro ao carregar Firestore',3600); }
+  }else{
+    setAccount(null);
+    $('authScreen')?.classList.remove('hidden');
+    $('authStatus')?.classList.remove('show');
+    $('logoutBtn')?.classList.remove('show');
+    showBadge('Entre para sincronizar com Firebase',1800);
+  }
+});
+</script>
+
+
+</body>
+</html>

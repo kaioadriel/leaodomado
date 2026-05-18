@@ -1,4 +1,4 @@
-const CACHE_NAME = 'leao-domado-ir-v37';
+const CACHE_NAME = 'leao-domado-ir-v38';
 const APP_SHELL = [
   './',
   './index.html',

@@ -380,7 +380,7 @@ body{padding-bottom:calc(var(--tab-h) + 8px)!important;}
   <div class="row"><div class="form-group"><label>Desconto simplificado (%)</label><input type="number" id="tbl_percDesc" step="0.01"></div><div class="form-group"><label>Limite desconto simplificado (R$)</label><input class="money-input" id="tbl_limiteDesc"></div></div>
   <div class="row"><div class="form-group"><label>Dedução por dependente (R$)</label><input class="money-input" id="tbl_deducaoDep"></div><div class="form-group"><label>Limite educação por pessoa (R$)</label><input class="money-input" id="tbl_limiteEduc"></div></div>
   <div class="row"><div class="form-group"><label>Quantidade de quotas/parcelas, máx. 8</label><input type="number" min="1" max="8" id="tbl_parcelas"></div><div class="form-group"><label>Acréscimo fixo da quota (%)</label><input type="number" step="0.01" id="tbl_acrescimoQuota"></div></div>
-  <div class="row"><div class="form-group"><label>SELIC acumulada estimada da 3ª em diante (%)</label><input type="number" step="0.01" id="tbl_selicAcumulada"><button type="button" class="btn btn-outline btn-sm" style="margin-top:8px" onclick="buscarSelicBCB()">🌐 Puxar SELIC BCB</button></div><div class="form-group"><label>Observação dos juros</label><input id="tbl_obsJuros" placeholder="Ex: atualizar no e-CAC"></div></div>
+  <div class="row"><div class="form-group"><label>SELIC acumulada estimada da 3ª em diante (%)</label><input type="number" step="0.01" id="tbl_selicAcumulada"><button type="button" class="btn btn-outline btn-sm" style="margin-top:8px" onclick="buscarSelicEstimativa()">🌐 Tentar buscar SELIC</button></div><div class="form-group"><label>Observação dos juros</label><input id="tbl_obsJuros" placeholder="Ex: atualizar no e-CAC"></div></div>
   <div class="form-group"><label>Observações da tabela</label><textarea id="tbl_obs"></textarea></div>
  </div>
  <div class="card"><div class="card-title">Faixas progressivas</div><div id="faixasBox" class="faixa-grid"></div><div class="btn-row"><button class="btn btn-outline btn-sm" onclick="addFaixa()">+ Faixa</button><button class="btn btn-secondary btn-sm" onclick="carregarExemplo2025()">📋 Exemplo anual 2025</button><button class="btn btn-secondary btn-sm" onclick="carregarExemploMensal2025()">📋 Exemplo mensal 2025</button></div><p class="compact-note" style="margin-top:8px">Se você lançar a tabela mensal, o app detecta e anualiza para o cálculo anual.</p></div>
@@ -413,7 +413,7 @@ body{padding-bottom:calc(var(--tab-h) + 8px)!important;}
 
 <section class="page" id="page-backup"><div class="section-head"><h2>💾 Backup</h2></div><div class="card"><div class="card-title">Exportar</div><div class="btn-row"><button class="btn btn-primary" onclick="exportarJSON()">📦 Fazer Backup</button><button class="btn btn-secondary" onclick="exportarCSV()">📊 CSV Resumo</button><button class="btn btn-secondary" onclick="exportarPDFResumo()">📄 PDF Resumo</button></div></div><div class="card"><div class="card-title">Importar</div><div class="form-group"><label>Selecionar arquivo .json</label><input type="file" accept=".json" onchange="importarJSON(event)"></div></div><div class="card"><div class="card-title">Limpar dados</div><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="limparDados('notes')">Limpar Anotações</button><button class="btn btn-secondary btn-sm" onclick="limparDados('simulations')">Limpar Simulações</button><button class="btn btn-secondary btn-sm" onclick="limparDados('history')">Limpar Histórico</button><button class="btn btn-danger" onclick="limparTudo()">⚠️ Apagar TUDO</button></div></div></section>
 
-<section class="page" id="page-ajustes"><div class="section-head"><h2>⚙️ Ajustes</h2><button class="btn btn-primary btn-sm" onclick="salvarAjustes()">💾 Salvar</button></div><div class="card"><div class="card-title">Preferências</div><div class="row"><div class="form-group"><label>Tema</label><select id="cfg_tema"><option value="light">Claro</option><option value="dark">Escuro</option></select></div><div class="form-group"><label>Tamanho da fonte</label><select id="cfg_fonte"><option value="14">Pequena</option><option value="16">Normal</option><option value="18">Grande</option></select></div></div><div class="row"><div class="form-group"><label>Exibir centavos</label><select id="cfg_centavos"><option value="sim">Sim</option><option value="nao">Não</option></select></div></div></div><div class="card"><div class="card-title">🔐 Conta e instalação</div><div class="account-row"><div><div class="compact-note">Usuário conectado</div><div class="account-email" id="authUserEmail">Aguardando login...</div></div><button class="btn btn-secondary btn-sm" onclick="window.leaoFirebase&&window.leaoFirebase.logout()">Sair</button></div><div class="btn-row"><button class="btn btn-primary btn-sm" id="installAppBtnSettings" onclick="window.leaoInstallApp&&window.leaoInstallApp()">📲 Instalar app</button><button class="btn btn-outline btn-sm" onclick="window.leaoDiagnosticoPWA&&window.leaoDiagnosticoPWA()">🧪 Diagnóstico PWA</button></div><p class="compact-note" style="margin-top:8px">Se o botão não aparecer, use o menu ⋮ do Chrome &gt; Instalar app. O diagnóstico confere HTTPS, manifest e service worker.</p></div><div class="card"><div class="card-title">ℹ️ Sobre o app</div><p class="compact-note"><b>Leão Domado IR</b> é uma plataforma digital desenvolvida para simplificar o controle anual do Imposto de Renda familiar. O aplicativo permite que você vá lançando seus rendimentos, despesas e patrimônios continuamente ao longo do ano, garantindo que, na hora de fazer a declaração no ano vem, você já tenha todos os dados organizados e na palma da mão. Um planejamento financeiro seguro, prático e sem correrias.</p></div><div class="card version-card"><div class="card-title">🦁 Versão Leão Domado IR 3.7</div><p class="compact-note">Últimas melhorias: instalação PWA reforçada com manifest externo e ícones; SELIC com caminhos alternativos; diagnóstico PWA adicionado.</p></div></section>
+<section class="page" id="page-ajustes"><div class="section-head"><h2>⚙️ Ajustes</h2><button class="btn btn-primary btn-sm" onclick="salvarAjustes()">💾 Salvar</button></div><div class="card"><div class="card-title">Preferências</div><div class="row"><div class="form-group"><label>Tema</label><select id="cfg_tema"><option value="light">Claro</option><option value="dark">Escuro</option></select></div><div class="form-group"><label>Tamanho da fonte</label><select id="cfg_fonte"><option value="14">Pequena</option><option value="16">Normal</option><option value="18">Grande</option></select></div></div><div class="row"><div class="form-group"><label>Exibir centavos</label><select id="cfg_centavos"><option value="sim">Sim</option><option value="nao">Não</option></select></div></div></div><div class="card"><div class="card-title">🔐 Conta e instalação</div><div class="account-row"><div><div class="compact-note">Usuário conectado</div><div class="account-email" id="authUserEmail">Aguardando login...</div></div><button class="btn btn-secondary btn-sm" onclick="window.leaoFirebase&&window.leaoFirebase.logout()">Sair</button></div><div class="btn-row"><button class="btn btn-primary btn-sm" id="installAppBtnSettings" onclick="window.leaoInstallApp&&window.leaoInstallApp()">📲 Instalar app</button><button class="btn btn-outline btn-sm" onclick="window.leaoDiagnosticoPWA&&window.leaoDiagnosticoPWA()">🧪 Diagnóstico PWA</button></div><p class="compact-note" style="margin-top:8px">Se o botão não aparecer, use o menu ⋮ do Chrome &gt; Instalar app. O diagnóstico confere HTTPS, manifest e service worker.</p></div><div class="card"><div class="card-title">ℹ️ Sobre o app</div><p class="compact-note"><b>Leão Domado IR</b> é uma plataforma digital desenvolvida para simplificar o controle anual do Imposto de Renda familiar. O aplicativo permite que você vá lançando seus rendimentos, despesas e patrimônios continuamente ao longo do ano, garantindo que, na hora de fazer a declaração no ano vem, você já tenha todos os dados organizados e na palma da mão. Um planejamento financeiro seguro, prático e sem correrias.</p></div><div class="card version-card"><div class="card-title">🦁 Versão Leão Domado IR 3.8</div><p class="compact-note">Últimas melhorias: SELIC corrigida pela média da SELIC diária; ícones refeitos com leão; PWA revisado para GitHub/domínio.</p></div></section>
 
 <footer class="app-copy">© 2026 Kaio Adriel<br>Todos os direitos reservados</footer>
 <nav class="tab-bar" id="tabbar">
@@ -493,71 +493,30 @@ function loadTabela(){let t=getTabela(activeYear)||novaTabela(activeYear);docume
 function novaTabela(ano){return{ano,exercicio:ano+1,percDesc:20,limiteDesc:16754.34,deducaoDep:2275.08,limiteEduc:3561.50,parcelas:1,selicAcumulada:0,acrescimoQuota:1,obs:'',obsJuros:'',faixas:[]}}
 function getTabela(ano){return appData.taxTables.find(t=>+t.ano===+ano)||null}
 function salvarTabela(){const ano=+val('tbl_ano')||activeYear;const t={ano,exercicio:+val('tbl_exercicio')||ano+1,percDesc:+val('tbl_percDesc')||20,limiteDesc:parseMoney(val('tbl_limiteDesc')),deducaoDep:parseMoney(val('tbl_deducaoDep')),limiteEduc:parseMoney(val('tbl_limiteEduc')),parcelas:Math.min(8,Math.max(1,+val('tbl_parcelas')||1)),selicAcumulada:+val('tbl_selicAcumulada')||0,acrescimoQuota:+val('tbl_acrescimoQuota')||0,obsJuros:val('tbl_obsJuros'),obs:val('tbl_obs'),faixas:faixasTemp.map((f,i)=>({de:parseMoney(val('fx_de_'+i)),ate:val('fx_ate_'+i).trim().toLowerCase()==='acima'||val('fx_ate_'+i)===''?null:parseMoney(val('fx_ate_'+i)),aliq:+val('fx_aliq_'+i)||0,ded:parseMoney(val('fx_ded_'+i))}))};appData.taxTables=appData.taxTables.filter(x=>+x.ano!==+ano);appData.taxTables.push(t);activeYear=ano;saveData();buildYearSelector();showToast('Tabela salva','success');loadTabela()}
-async function buscarSelicBCB(){
-  const anoCalendario = +val('tbl_ano') || activeYear;
-  const exercicio = +val('tbl_exercicio') || (anoCalendario + 1);
-  const hoje = new Date();
-  const dd = String(hoje.getDate()).padStart(2,'0');
-  const mm = String(hoje.getMonth()+1).padStart(2,'0');
-  const yyyy = hoje.getFullYear();
-  const dataFinal = dd+'/'+mm+'/'+yyyy;
-  // Para quota de IRPF, normalmente o acumulado começa após o prazo de entrega/pagamento.
-  // Mantemos janeiro do exercício como referência editável/estimativa, e o usuário confere no e-CAC antes de pagar.
-  const dataInicial = '01/01/'+exercicio;
-  const endpointBCB = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.4390/dados?formato=json&dataInicial='+encodeURIComponent(dataInicial)+'&dataFinal='+encodeURIComponent(dataFinal);
-
-  async function fetchJson(url, timeoutMs=9000){
-    const ctrl = new AbortController();
-    const timer = setTimeout(()=>ctrl.abort(), timeoutMs);
-    try{
-      const resp = await fetch(url, {cache:'no-store', signal:ctrl.signal});
-      if(!resp.ok) throw new Error('HTTP '+resp.status);
-      return await resp.json();
-    } finally { clearTimeout(timer); }
-  }
-  function somaSerieBCB(dados){
-    if(!Array.isArray(dados) || !dados.length) throw new Error('sem dados no período');
-    return dados.reduce((acc,item)=>acc+(parseFloat(String(item.valor).replace(',','.'))||0),0);
-  }
-
-  try{
-    showToast('Buscando SELIC no Banco Central...');
-    let dados;
-    let fonte = 'BCB/SGS série 4390';
-    try{
-      dados = await fetchJson(endpointBCB);
-    }catch(e1){
-      console.warn('BCB direto falhou, tentando ponte CORS', e1);
-      const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(endpointBCB);
-      dados = await fetchJson(proxy, 12000);
-      fonte = 'BCB/SGS série 4390 via ponte CORS';
-    }
-    const soma = somaSerieBCB(dados);
-    document.getElementById('tbl_selicAcumulada').value = soma.toFixed(2);
-    document.getElementById('tbl_obsJuros').value = 'SELIC estimada puxada de '+fonte+' de '+dataInicial+' a '+dataFinal+'. Confira o valor final no e-CAC/Receita antes de pagar as quotas.';
-    showToast('SELIC preenchida: '+soma.toFixed(2)+'%','success');
-  }catch(e){
-    console.warn('BCB e ponte falharam, tentando BrasilAPI como estimativa', e);
-    try{
-      // Caminho alternativo: BrasilAPI retorna a taxa Selic vigente/anual, não o acumulado oficial das quotas.
-      // Convertemos em aproximação mensal simples para não deixar o campo morto quando o BCB bloqueia a consulta.
-      const taxa = await fetchJson('https://brasilapi.com.br/api/taxas/v1/SELIC', 9000);
-      const valorAnual = parseFloat(String(taxa.valor ?? taxa[0]?.valor ?? '').replace(',','.')) || 0;
-      if(!valorAnual) throw new Error('BrasilAPI sem valor');
-      const meses = Math.max(1, (hoje.getFullYear()-exercicio)*12 + hoje.getMonth()+1);
-      const estimada = (valorAnual/12) * meses;
-      document.getElementById('tbl_selicAcumulada').value = estimada.toFixed(2);
-      document.getElementById('tbl_obsJuros').value = 'Estimativa por BrasilAPI: Selic anual vigente de '+valorAnual.toFixed(2)+'% convertida proporcionalmente. Não é o acumulado oficial das quotas. Confira no e-CAC antes de pagar.';
-      showToast('SELIC estimada preenchida: '+estimada.toFixed(2)+'%','success');
-    }catch(e2){
-      console.error(e2);
-      const consulta = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.4390/dados?formato=json&dataInicial='+encodeURIComponent(dataInicial)+'&dataFinal='+encodeURIComponent(dataFinal);
-      const abrir = confirm('Não consegui puxar automaticamente. Quer abrir a consulta oficial do Banco Central para copiar o valor manualmente?');
-      if(abrir) window.open(consulta, '_blank', 'noopener');
-      showToast('SELIC não disponível. Preencha manualmente.','error');
-    }
+async function buscarSelicEstimativa() {
+  const ano = parseInt(document.getElementById('tbl_ano')?.value) || activeYear;
+  try {
+    const inicio = `01/01/${ano}`;
+    const fim = new Date().toLocaleDateString('pt-BR');
+    const url = `https://api.bcb.gov.br/dados/serie/bcdata.sgs.11/dados?formato=json&dataInicial=${inicio}&dataFinal=${fim}`;
+    const resp = await fetch(url, { cache: 'no-store' });
+    if (!resp.ok) throw new Error('falha HTTP ' + resp.status);
+    const dados = await resp.json();
+    if (!Array.isArray(dados) || !dados.length) throw new Error('sem dados');
+    const ultimos = dados.slice(-30).map(d => parseFloat(String(d.valor).replace(',', '.')) || 0).filter(v => Number.isFinite(v));
+    if (!ultimos.length) throw new Error('sem valores válidos');
+    const mediaDiaria = ultimos.reduce((s, v) => s + v, 0) / ultimos.length;
+    const mensal = mediaDiaria * 21;
+    document.getElementById('tbl_selicAcumulada').value = mensal.toFixed(4);
+    document.getElementById('tbl_acrescimoQuota').value = document.getElementById('tbl_acrescimoQuota').value || '1';
+    document.getElementById('tbl_obsJuros').value = 'SELIC estimada automaticamente pela média recente da SELIC diária do Banco Central. O acréscimo fixo é informado em campo separado. Conferir regra oficial antes de pagar.';
+    showToast('SELIC estimada preenchida: ' + mensal.toFixed(4) + '%', 'success');
+  } catch (err) {
+    console.warn('Falha ao buscar SELIC:', err);
+    showToast('Busca da SELIC falhou. Informe a SELIC e o acréscimo fixo manualmente.', 'error');
   }
 }
+function buscarSelicBCB(){ return buscarSelicEstimativa(); }
 function renderFaixas(){const box=document.getElementById('faixasBox');if(!box)return;if(!faixasTemp.length){box.innerHTML='<div class="alert alert-info">Nenhuma faixa cadastrada.</div>';return}box.innerHTML=faixasTemp.map((f,i)=>'<div class="list-card"><div class="row"><div class="form-group"><label>Base inicial</label><input class="money-input" id="fx_de_'+i+'" value="'+fmtInput(f.de)+'"></div><div class="form-group"><label>Base final</label><input class="money-input" id="fx_ate_'+i+'" value="'+(f.ate==null?'Acima':fmtInput(f.ate))+'"></div></div><div class="row"><div class="form-group"><label>Alíquota (%)</label><input type="number" step="0.01" id="fx_aliq_'+i+'" value="'+(f.aliq||0)+'"></div><div class="form-group"><label>Parcela a deduzir</label><input class="money-input" id="fx_ded_'+i+'" value="'+fmtInput(f.ded)+'"></div></div><button class="btn btn-danger btn-sm" onclick="removeFaixa('+i+')">Excluir faixa</button></div>').join('');setupMoneyMasks(box)}
 function addFaixa(){faixasTemp.push({de:0,ate:null,aliq:0,ded:0});renderFaixas()}
 function removeFaixa(i){faixasTemp.splice(i,1);renderFaixas()}
@@ -927,7 +886,7 @@ function clearAuthError(){ const el=$('authError'); if(el){ el.textContent=''; e
 function showBadge(msg, timeout=2200){ const b=$('cloudStatusBadge'); if(!b)return; b.textContent=msg; b.classList.add('show'); if(timeout) setTimeout(()=>b.classList.remove('show'),timeout); }
 function setAccount(user){ if($('authName')) $('authName').textContent=user?.displayName||user?.email||'Logado'; if($('authAvatar')) $('authAvatar').textContent=(user?.displayName||user?.email||'L').trim().charAt(0).toUpperCase(); document.querySelectorAll('#authUserEmail').forEach(el=>el.textContent=user?.email||user?.displayName||'Usuário conectado'); }
 async function loadCloudData(user){ const snap=await getDoc(appDocRef(user.uid)); if(snap.exists() && snap.data()?.payload){ window.leaoApplyCloudData?.(snap.data().payload, snap.data().activeYear); } else { await saveCloudData(window.appData, window.activeYear, true); } }
-async function saveCloudData(data, year, immediate=false){ if(!currentUser||!data)return; const run=async()=>{ await setDoc(appDocRef(currentUser.uid), { payload: JSON.parse(JSON.stringify(data)), activeYear: year, updatedAt: serverTimestamp(), app:'Leão Domado IR', appVersion:'3.5' }, { merge:true }); }; if(immediate) return run(); clearTimeout(saveTimer); saveTimer=setTimeout(()=>run().catch(e=>{console.error(e);showBadge('Não foi possível salvar na nuvem',2600)}),800); }
+async function saveCloudData(data, year, immediate=false){ if(!currentUser||!data)return; const run=async()=>{ await setDoc(appDocRef(currentUser.uid), { payload: JSON.parse(JSON.stringify(data)), activeYear: year, updatedAt: serverTimestamp(), app:'Leão Domado IR', appVersion:'3.8' }, { merge:true }); }; if(immediate) return run(); clearTimeout(saveTimer); saveTimer=setTimeout(()=>run().catch(e=>{console.error(e);showBadge('Não foi possível salvar na nuvem',2600)}),800); }
 
 let authMode='login';
 function setBusyAuth(isBusy){ document.querySelectorAll('#emailAuthBtn,#googleLoginBtn,#authTabLogin,#authTabCreate').forEach(btn=>{ if(btn) btn.disabled=!!isBusy; }); }

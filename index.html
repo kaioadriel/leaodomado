@@ -254,6 +254,29 @@ body{padding-bottom:calc(var(--tab-h) + 8px)!important;}
 .app-header .install-btn.show{display:inline-flex!important}.auth-card #authInstallBtn{display:none}.auth-card #authInstallBtn.show{display:flex}.logout-btn{display:none}.logout-btn.show{display:inline-flex}
 [data-theme="dark"] .auth-card .btn-google{background:#0f172a;color:#f8fafc;border-color:#334155}
 
+
+/* ===== Ajustes v3.5: Login por e-mail/senha e criação de conta ===== */
+.auth-card{max-width:460px}
+.auth-mode-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 14px;background:var(--gray-100);border:1px solid var(--gray-200);border-radius:16px;padding:5px}
+.auth-mode-tab{border:0;background:transparent;color:var(--gray-600);font:inherit;font-size:.82rem;font-weight:950;border-radius:12px;padding:9px 10px;cursor:pointer}
+.auth-mode-tab.active{background:var(--blue-700);color:#fff;box-shadow:var(--shadow-sm)}
+.auth-email-form{display:grid;gap:10px;margin-top:8px}
+.auth-email-form .form-group{margin-bottom:0}
+.auth-email-form input{background:var(--white)}
+.auth-divider{display:flex;align-items:center;gap:10px;margin:14px 0 10px;color:var(--gray-500);font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.06em}
+.auth-divider::before,.auth-divider::after{content:"";height:1px;background:var(--gray-200);flex:1}
+.auth-link-btn{border:0;background:transparent;color:var(--blue-800);font:inherit;font-size:.8rem;font-weight:900;text-decoration:underline;cursor:pointer;padding:4px 0;text-align:center}
+[data-theme="dark"] .auth-mode-tabs{background:#0f172a;border-color:#334155}
+[data-theme="dark"] .auth-mode-tab{color:#cbd5e1}
+[data-theme="dark"] .auth-mode-tab.active{background:#2563eb;color:#fff}
+[data-theme="dark"] .auth-link-btn{color:#93c5fd}
+
+
+/* ===== Ajustes v3.6: cabeçalho compacto sem sair ===== */
+.app-header{gap:8px!important;}
+.app-header .logo{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;flex:1 1 auto!important;}
+.app-header .year-select{flex:0 0 auto!important;min-width:104px!important;text-align:center!important;}
+@media(max-width:430px){.app-header{padding:0 10px!important}.app-header .logo{font-size:1.26rem!important}.app-header .year-select{max-width:112px!important;padding:9px 10px!important}}
 </style>
 </head>
 <body>
@@ -263,19 +286,43 @@ body{padding-bottom:calc(var(--tab-h) + 8px)!important;}
       <div class="auth-icon">🦁</div>
       <div class="auth-title"><span class="a-gold">Leão Domado</span> <span class="a-blue">IR</span></div>
     </div>
-    <p class="auth-sub">Entre com sua conta Google para sincronizar seus dados fiscais com segurança no Firebase. Os dados continuam salvos localmente como apoio.</p>
+    <p class="auth-sub">Entre com e-mail e senha ou com Google para sincronizar seus dados fiscais com segurança no Firebase. Os dados continuam salvos localmente como apoio.</p>
     <div class="auth-error" id="authError"></div>
+
+    <div class="auth-mode-tabs" role="tablist" aria-label="Tipo de acesso">
+      <button class="auth-mode-tab active" type="button" id="authTabLogin" onclick="leaoAuthSetMode('login')">Entrar</button>
+      <button class="auth-mode-tab" type="button" id="authTabCreate" onclick="leaoAuthSetMode('create')">Criar conta</button>
+    </div>
+
+    <form class="auth-email-form" onsubmit="return leaoSubmitEmailAuth(event)">
+      <div class="form-group" id="authNameWrap" style="display:none">
+        <label>Nome para a conta</label>
+        <input type="text" id="authDisplayName" autocomplete="name" placeholder="Seu nome">
+      </div>
+      <div class="form-group">
+        <label>E-mail</label>
+        <input type="email" id="authEmail" autocomplete="email" placeholder="seuemail@exemplo.com" required>
+      </div>
+      <div class="form-group">
+        <label>Senha</label>
+        <input type="password" id="authPassword" autocomplete="current-password" placeholder="Digite sua senha" minlength="6" required>
+      </div>
+      <button class="btn btn-primary btn-full" type="submit" id="emailAuthBtn">🔐 Entrar com e-mail</button>
+    </form>
+
+    <div class="auth-divider">ou</div>
     <div class="auth-actions">
       <button class="btn btn-google btn-full" type="button" id="googleLoginBtn" onclick="leaoLoginGoogle()">🌐 Entrar com Google</button>
       <button class="btn btn-outline btn-full" type="button" id="authInstallBtn" onclick="leaoInstallApp()">📲 Instalar app no Chrome</button>
     </div>
+    <button class="auth-link-btn" type="button" id="authSwitchHint" onclick="leaoAuthToggleMode()">Ainda não tenho conta</button>
     <div class="auth-msg" id="authMsg">Aguardando login...</div>
     <div class="auth-foot">Leão Domado IR • © 2026 Kaio Adriel<br>Todos os direitos reservados</div>
   </div>
 </div>
 <div class="offline-badge" id="cloudStatusBadge">Conectando ao Firebase...</div>
 
-<header class="app-header"><div class="logo logo-leao">🦁 <span class="brand-leao">Leão</span> <span class="brand-domado">Domado</span> <span class="brand-ir">IR</span></div><div class="auth-status" id="authStatus"><span class="auth-avatar" id="authAvatar">✓</span><span id="authName">Logado</span></div><button class="install-btn" id="installBtn" onclick="leaoInstallApp()" title="Instalar app">📲</button><button class="logout-btn" id="logoutBtn" onclick="leaoLogout()" title="Sair">Sair</button><select id="yearSelect" class="year-select" onchange="changeYear(this.value)"></select></header>
+<header class="app-header"><div class="logo logo-leao">🦁 <span class="brand-leao">Leão</span> <span class="brand-domado">Domado</span> <span class="brand-ir">IR</span></div><select id="yearSelect" class="year-select" onchange="changeYear(this.value)"></select></header>
 <div class="toastbox" id="toastbox"></div>
 <div class="modal" id="modal"><div class="modal-box"><div class="modal-title" id="modalTitle"></div><div id="modalBody"></div><div class="modal-actions" id="modalActions"></div></div></div>
 
@@ -363,7 +410,7 @@ body{padding-bottom:calc(var(--tab-h) + 8px)!important;}
 
 <section class="page" id="page-backup"><div class="section-head"><h2>💾 Backup</h2></div><div class="card"><div class="card-title">Exportar</div><div class="btn-row"><button class="btn btn-primary" onclick="exportarJSON()">📦 Fazer Backup</button><button class="btn btn-secondary" onclick="exportarCSV()">📊 CSV Resumo</button><button class="btn btn-secondary" onclick="exportarPDFResumo()">📄 PDF Resumo</button></div></div><div class="card"><div class="card-title">Importar</div><div class="form-group"><label>Selecionar arquivo .json</label><input type="file" accept=".json" onchange="importarJSON(event)"></div></div><div class="card"><div class="card-title">Limpar dados</div><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="limparDados('notes')">Limpar Anotações</button><button class="btn btn-secondary btn-sm" onclick="limparDados('simulations')">Limpar Simulações</button><button class="btn btn-secondary btn-sm" onclick="limparDados('history')">Limpar Histórico</button><button class="btn btn-danger" onclick="limparTudo()">⚠️ Apagar TUDO</button></div></div></section>
 
-<section class="page" id="page-ajustes"><div class="section-head"><h2>⚙️ Ajustes</h2><button class="btn btn-primary btn-sm" onclick="salvarAjustes()">💾 Salvar</button></div><div class="card"><div class="card-title">Preferências</div><div class="row"><div class="form-group"><label>Tema</label><select id="cfg_tema"><option value="light">Claro</option><option value="dark">Escuro</option></select></div><div class="form-group"><label>Tamanho da fonte</label><select id="cfg_fonte"><option value="14">Pequena</option><option value="16">Normal</option><option value="18">Grande</option></select></div></div><div class="row"><div class="form-group"><label>Exibir centavos</label><select id="cfg_centavos"><option value="sim">Sim</option><option value="nao">Não</option></select></div></div></div><div class="card"><div class="card-title">🔐 Conta e instalação</div><div class="account-row"><div><div class="compact-note">Usuário conectado</div><div class="account-email" id="authUserEmail">Aguardando login...</div></div><button class="btn btn-secondary btn-sm" onclick="window.leaoFirebase&&window.leaoFirebase.logout()">Sair</button></div><div class="btn-row"><button class="btn btn-primary btn-sm" id="installAppBtnSettings" onclick="window.leaoInstallApp&&window.leaoInstallApp()">📲 Instalar app</button></div><p class="compact-note" style="margin-top:8px">O botão aparece quando o Chrome considerar o PWA instalável.</p></div><div class="card"><div class="card-title">ℹ️ Sobre o app</div><p class="compact-note"><b>Leão Domado IR</b> é uma plataforma digital desenvolvida para simplificar o controle anual do Imposto de Renda familiar. O aplicativo permite que você vá lançando seus rendimentos, despesas e patrimônios continuamente ao longo do ano, garantindo que, na hora de fazer a declaração no ano vem, você já tenha todos os dados organizados e na palma da mão. Um planejamento financeiro seguro, prático e sem correrias.</p></div><div class="card version-card"><div class="card-title">🦁 Versão Leão Domado IR 3.4</div><p class="compact-note">Últimas melhorias: autenticação Firebase; login com Google; instalação PWA solicitável no Chrome.</p></div></section>
+<section class="page" id="page-ajustes"><div class="section-head"><h2>⚙️ Ajustes</h2><button class="btn btn-primary btn-sm" onclick="salvarAjustes()">💾 Salvar</button></div><div class="card"><div class="card-title">Preferências</div><div class="row"><div class="form-group"><label>Tema</label><select id="cfg_tema"><option value="light">Claro</option><option value="dark">Escuro</option></select></div><div class="form-group"><label>Tamanho da fonte</label><select id="cfg_fonte"><option value="14">Pequena</option><option value="16">Normal</option><option value="18">Grande</option></select></div></div><div class="row"><div class="form-group"><label>Exibir centavos</label><select id="cfg_centavos"><option value="sim">Sim</option><option value="nao">Não</option></select></div></div></div><div class="card"><div class="card-title">🔐 Conta e instalação</div><div class="account-row"><div><div class="compact-note">Usuário conectado</div><div class="account-email" id="authUserEmail">Aguardando login...</div></div><button class="btn btn-secondary btn-sm" onclick="window.leaoFirebase&&window.leaoFirebase.logout()">Sair</button></div><div class="btn-row"><button class="btn btn-primary btn-sm" id="installAppBtnSettings" onclick="window.leaoInstallApp&&window.leaoInstallApp()">📲 Instalar app</button></div><p class="compact-note" style="margin-top:8px">O botão aparece quando o Chrome considerar o PWA instalável.</p></div><div class="card"><div class="card-title">ℹ️ Sobre o app</div><p class="compact-note"><b>Leão Domado IR</b> é uma plataforma digital desenvolvida para simplificar o controle anual do Imposto de Renda familiar. O aplicativo permite que você vá lançando seus rendimentos, despesas e patrimônios continuamente ao longo do ano, garantindo que, na hora de fazer a declaração no ano vem, você já tenha todos os dados organizados e na palma da mão. Um planejamento financeiro seguro, prático e sem correrias.</p></div><div class="card version-card"><div class="card-title">🦁 Versão Leão Domado IR 3.6</div><p class="compact-note">Últimas melhorias: cabeçalho corrigido; botão Sair movido para Ajustes; seletor de ano voltou a ficar visível.</p></div></section>
 
 <footer class="app-copy">© 2026 Kaio Adriel<br>Todos os direitos reservados</footer>
 <nav class="tab-bar" id="tabbar">
@@ -758,7 +805,7 @@ loadData();buildYearSelector();setupMoneyMasks();initPWA();renderAll();
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -784,11 +831,64 @@ function clearAuthError(){ const el=$('authError'); if(el){ el.textContent=''; e
 function showBadge(msg, timeout=2200){ const b=$('cloudStatusBadge'); if(!b)return; b.textContent=msg; b.classList.add('show'); if(timeout) setTimeout(()=>b.classList.remove('show'),timeout); }
 function setAccount(user){ if($('authName')) $('authName').textContent=user?.displayName||user?.email||'Logado'; if($('authAvatar')) $('authAvatar').textContent=(user?.displayName||user?.email||'L').trim().charAt(0).toUpperCase(); document.querySelectorAll('#authUserEmail').forEach(el=>el.textContent=user?.email||user?.displayName||'Usuário conectado'); }
 async function loadCloudData(user){ const snap=await getDoc(appDocRef(user.uid)); if(snap.exists() && snap.data()?.payload){ window.leaoApplyCloudData?.(snap.data().payload, snap.data().activeYear); } else { await saveCloudData(window.appData, window.activeYear, true); } }
-async function saveCloudData(data, year, immediate=false){ if(!currentUser||!data)return; const run=async()=>{ await setDoc(appDocRef(currentUser.uid), { payload: JSON.parse(JSON.stringify(data)), activeYear: year, updatedAt: serverTimestamp(), app:'Leão Domado IR', appVersion:'3.4' }, { merge:true }); }; if(immediate) return run(); clearTimeout(saveTimer); saveTimer=setTimeout(()=>run().catch(e=>{console.error(e);showBadge('Não foi possível salvar na nuvem',2600)}),800); }
+async function saveCloudData(data, year, immediate=false){ if(!currentUser||!data)return; const run=async()=>{ await setDoc(appDocRef(currentUser.uid), { payload: JSON.parse(JSON.stringify(data)), activeYear: year, updatedAt: serverTimestamp(), app:'Leão Domado IR', appVersion:'3.5' }, { merge:true }); }; if(immediate) return run(); clearTimeout(saveTimer); saveTimer=setTimeout(()=>run().catch(e=>{console.error(e);showBadge('Não foi possível salvar na nuvem',2600)}),800); }
+
+let authMode='login';
+function setBusyAuth(isBusy){ document.querySelectorAll('#emailAuthBtn,#googleLoginBtn,#authTabLogin,#authTabCreate').forEach(btn=>{ if(btn) btn.disabled=!!isBusy; }); }
+function firebaseAuthMessage(code, fallback){
+  const map={
+    'auth/email-already-in-use':'Este e-mail já possui conta. Use Entrar.',
+    'auth/invalid-email':'E-mail inválido.',
+    'auth/invalid-credential':'E-mail ou senha incorretos.',
+    'auth/user-not-found':'Conta não encontrada. Use Criar conta.',
+    'auth/wrong-password':'Senha incorreta.',
+    'auth/weak-password':'A senha precisa ter pelo menos 6 caracteres.',
+    'auth/popup-closed-by-user':'Login cancelado antes de concluir.',
+    'auth/unauthorized-domain':'Domínio não autorizado no Firebase Authentication.',
+    'auth/network-request-failed':'Falha de conexão. Verifique a internet.'
+  };
+  return map[code] || fallback || code || 'Falha na autenticação.';
+}
+window.leaoAuthSetMode=function(mode){
+  authMode = mode === 'create' ? 'create' : 'login';
+  clearAuthError();
+  $('authTabLogin')?.classList.toggle('active', authMode==='login');
+  $('authTabCreate')?.classList.toggle('active', authMode==='create');
+  const nameWrap=$('authNameWrap'); if(nameWrap) nameWrap.style.display = authMode==='create' ? '' : 'none';
+  const pass=$('authPassword'); if(pass) pass.autocomplete = authMode==='create' ? 'new-password' : 'current-password';
+  const btn=$('emailAuthBtn'); if(btn) btn.textContent = authMode==='create' ? '✨ Criar conta com e-mail' : '🔐 Entrar com e-mail';
+  const hint=$('authSwitchHint'); if(hint) hint.textContent = authMode==='create' ? 'Já tenho conta' : 'Ainda não tenho conta';
+  const msg=$('authMsg'); if(msg) msg.textContent = authMode==='create' ? 'Crie sua conta para salvar os dados na nuvem.' : 'Entre para sincronizar seus dados.';
+};
+window.leaoAuthToggleMode=function(){ window.leaoAuthSetMode(authMode==='login'?'create':'login'); };
+window.leaoSubmitEmailAuth=async function(event){
+  event.preventDefault(); clearAuthError();
+  const email=($('authEmail')?.value||'').trim();
+  const password=$('authPassword')?.value||'';
+  const displayName=($('authDisplayName')?.value||'').trim();
+  if(!email || !password){ showAuthError('Preencha e-mail e senha.'); return false; }
+  setBusyAuth(true);
+  try{
+    showBadge(authMode==='create'?'Criando conta...':'Entrando...',0);
+    if(authMode==='create'){
+      const cred=await createUserWithEmailAndPassword(auth,email,password);
+      if(displayName) await updateProfile(cred.user,{displayName});
+    }else{
+      await signInWithEmailAndPassword(auth,email,password);
+    }
+  }catch(e){
+    console.error(e);
+    showAuthError(firebaseAuthMessage(e.code,e.message));
+    showBadge('Falha na autenticação',2200);
+  }finally{
+    setBusyAuth(false);
+  }
+  return false;
+};
+
 window.leaoFirebase={ isReady:()=>!!currentUser, saveAppData:(data,year)=>saveCloudData(data,year), logout:()=>signOut(auth) };
-window.leaoLoginGoogle=async function(){ clearAuthError(); try{ showBadge('Abrindo login do Google...',0); await signInWithPopup(auth,provider); }catch(e){ console.error(e); showAuthError('Falha no login com Google: '+(e.code||e.message)); showBadge('Falha no login',2200); } };
+window.leaoLoginGoogle=async function(){ clearAuthError(); setBusyAuth(true); try{ showBadge('Abrindo login do Google...',0); await signInWithPopup(auth,provider); }catch(e){ console.error(e); showAuthError(firebaseAuthMessage(e.code,e.message)); showBadge('Falha no login',2200); }finally{ setBusyAuth(false); } };
 window.leaoLogout=async function(){ try{ await signOut(auth); }catch(e){ console.error(e); showBadge('Não foi possível sair',2200); } };
-$('googleLoginBtn')?.addEventListener('click',()=>window.leaoLoginGoogle());
 
 onAuthStateChanged(auth, async (user)=>{
   currentUser=user;

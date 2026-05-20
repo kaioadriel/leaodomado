@@ -413,7 +413,7 @@ body{padding-bottom:calc(var(--tab-h) + 8px)!important;}
 
 <section class="page" id="page-backup"><div class="section-head"><h2>💾 Backup</h2></div><div class="card"><div class="card-title">Exportar</div><div class="btn-row"><button class="btn btn-primary" onclick="exportarJSON()">📦 Fazer Backup</button><button class="btn btn-secondary" onclick="exportarCSV()">📊 CSV Resumo</button><button class="btn btn-secondary" onclick="exportarPDFResumo()">📄 PDF Resumo</button></div></div><div class="card"><div class="card-title">Importar</div><div class="form-group"><label>Selecionar arquivo .json</label><input type="file" accept=".json" onchange="importarJSON(event)"></div></div><div class="card"><div class="card-title">Limpar dados</div><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="limparDados('notes')">Limpar Anotações</button><button class="btn btn-secondary btn-sm" onclick="limparDados('simulations')">Limpar Simulações</button><button class="btn btn-secondary btn-sm" onclick="limparDados('history')">Limpar Histórico</button><button class="btn btn-danger" onclick="limparTudo()">⚠️ Apagar TUDO</button></div></div></section>
 
-<section class="page" id="page-ajustes"><div class="section-head"><h2>⚙️ Ajustes</h2><button class="btn btn-primary btn-sm" onclick="salvarAjustes()">💾 Salvar</button></div><div class="card"><div class="card-title">Preferências</div><div class="row"><div class="form-group"><label>Tema</label><select id="cfg_tema"><option value="light">Claro</option><option value="dark">Escuro</option></select></div><div class="form-group"><label>Tamanho da fonte</label><select id="cfg_fonte"><option value="14">Pequena</option><option value="16">Normal</option><option value="18">Grande</option></select></div></div><div class="row"><div class="form-group"><label>Exibir centavos</label><select id="cfg_centavos"><option value="sim">Sim</option><option value="nao">Não</option></select></div></div></div><div class="card"><div class="card-title">🔐 Conta e instalação</div><div class="account-row"><div><div class="compact-note">Usuário conectado</div><div class="account-email" id="authUserEmail">Aguardando login...</div></div><button class="btn btn-secondary btn-sm" onclick="window.leaoFirebase&&window.leaoFirebase.logout()">Sair</button></div><div class="btn-row"><button class="btn btn-primary btn-sm" id="installAppBtnSettings" onclick="window.leaoInstallApp&&window.leaoInstallApp()">📲 Instalar app</button><button class="btn btn-outline btn-sm" onclick="window.leaoDiagnosticoPWA&&window.leaoDiagnosticoPWA()">🧪 Diagnóstico PWA</button></div><p class="compact-note" style="margin-top:8px">Se o botão não aparecer, use o menu ⋮ do Chrome &gt; Instalar app. O diagnóstico confere HTTPS, manifest e service worker.</p></div><div class="card"><div class="card-title">ℹ️ Sobre o app</div><p class="compact-note"><b>Leão Domado IR</b> é uma plataforma digital desenvolvida para simplificar o controle anual do Imposto de Renda familiar. O aplicativo permite que você vá lançando seus rendimentos, despesas e patrimônios continuamente ao longo do ano, garantindo que, na hora de fazer a declaração no ano vem, você já tenha todos os dados organizados e na palma da mão. Um planejamento financeiro seguro, prático e sem correrias.</p></div><div class="card version-card"><div class="card-title">🦁 Versão Leão Domado IR 3.8</div><p class="compact-note">Últimas melhorias: SELIC corrigida pela média da SELIC diária; ícones refeitos com leão; PWA revisado para GitHub/domínio.</p></div></section>
+<section class="page" id="page-ajustes"><div class="section-head"><h2>⚙️ Ajustes</h2><button class="btn btn-primary btn-sm" onclick="salvarAjustes()">💾 Salvar</button></div><div class="card"><div class="card-title">Preferências</div><div class="row"><div class="form-group"><label>Tema</label><select id="cfg_tema"><option value="light">Claro</option><option value="dark">Escuro</option></select></div><div class="form-group"><label>Tamanho da fonte</label><select id="cfg_fonte"><option value="14">Pequena</option><option value="16">Normal</option><option value="18">Grande</option></select></div></div><div class="row"><div class="form-group"><label>Exibir centavos</label><select id="cfg_centavos"><option value="sim">Sim</option><option value="nao">Não</option></select></div></div></div><div class="card"><div class="card-title">🔐 Conta e instalação</div><div class="account-row"><div><div class="compact-note">Usuário conectado</div><div class="account-email" id="authUserEmail">Aguardando login...</div></div><button class="btn btn-secondary btn-sm" onclick="window.leaoFirebase&&window.leaoFirebase.logout()">Sair</button></div><div class="btn-row"><button class="btn btn-primary btn-sm" id="installAppBtnSettings" onclick="window.leaoInstallApp&&window.leaoInstallApp()">📲 Instalar app</button><button class="btn btn-outline btn-sm" onclick="window.leaoDiagnosticoPWA&&window.leaoDiagnosticoPWA()">🧪 Diagnóstico PWA</button></div><p class="compact-note" style="margin-top:8px">Se o botão não aparecer, use o menu ⋮ do Chrome &gt; Instalar app. O diagnóstico confere HTTPS, manifest e service worker.</p></div><div class="card"><div class="card-title">ℹ️ Sobre o app</div><p class="compact-note"><b>Leão Domado IR</b> é uma plataforma digital desenvolvida para simplificar o controle anual do Imposto de Renda familiar. O aplicativo permite que você vá lançando seus rendimentos, despesas e patrimônios continuamente ao longo do ano, garantindo que, na hora de fazer a declaração no ano vem, você já tenha todos os dados organizados e na palma da mão. Um planejamento financeiro seguro, prático e sem correrias.</p></div><div class="card version-card"><div class="card-title">🦁 Versão Leão Domado IR 3.9</div><p class="compact-note">Últimas melhorias: dados isolados por usuário; conta nova não importa cache antigo; sincronização Firebase mais segura.</p></div></section>
 
 <footer class="app-copy">© 2026 Kaio Adriel<br>Todos os direitos reservados</footer>
 <nav class="tab-bar" id="tabbar">
@@ -432,19 +432,24 @@ body{padding-bottom:calc(var(--tab-h) + 8px)!important;}
 </nav>
 
 <script>
-const KEY='irDoPaiData_v4';
+const KEY_BASE='irDoPaiData_v4';
 const OLD_KEY='irDoPaiData';
-const VERSION=34;
+let currentStorageKey=KEY_BASE+'_guest';
+function storageKey(){return currentStorageKey||KEY_BASE+'_guest'}
+function setStorageUser(uid){currentStorageKey=uid?KEY_BASE+'_user_'+uid:KEY_BASE+'_guest'}
+function hasLocalForUid(uid){return !!localStorage.getItem(KEY_BASE+'_user_'+uid)}
+function readLocalByKey(key){try{const raw=localStorage.getItem(key);return raw?JSON.parse(raw):null}catch(e){console.error(e);return null}}
+const VERSION=39;
 const uid=(p='id')=>p+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,7);
 const todayYear=()=>new Date().getFullYear()-1;
 var activeYear=todayYear();
 let faixasTemp=[];
 var appData=defaultData();
 function defaultData(){return{version:VERSION,settings:{tema:'light',fonte:'16',centavos:'sim',modo:'clt'},dados:{nome:'',cpf:'',nascimento:'',email:'',telefone:'',cep:'',endereco:'',numero:'',complemento:'',bairro:'',cidade:'',uf:'',natureza:'01 - Empregado de empresa do setor privado',ocupacao:'000 - Outras ocupações não especificadas anteriormente',residente:'sim',doenca:'nao'},dependents:[],incomeEntries:[],assets:[],payments:[],deductions:[],taxTables:[],notes:[],simulations:[],history:[],timeline:[],modelChoices:{}}};
-function loadData(){try{const raw=localStorage.getItem(KEY);if(raw){appData={...defaultData(),...JSON.parse(raw)};normalizeData();return}const old=localStorage.getItem(OLD_KEY);if(old){migrarDadosAntigos(JSON.parse(old));saveData();showToast('Dados antigos migrados para v4','success');return}}catch(e){console.error(e);showToast('Erro ao carregar dados','error');appData=defaultData()}normalizeData()}
+function loadData(){try{const raw=localStorage.getItem(storageKey());if(raw){appData={...defaultData(),...JSON.parse(raw)};normalizeData();return}if(storageKey()===KEY_BASE+'_guest'){const old=localStorage.getItem(OLD_KEY);if(old){migrarDadosAntigos(JSON.parse(old));saveData(false);showToast('Dados antigos migrados para v4','success');return}}}catch(e){console.error(e);showToast('Erro ao carregar dados','error');appData=defaultData()}normalizeData()}
 function normalizeData(){appData.settings={...defaultData().settings,...(appData.settings||{})};appData.dados={...defaultData().dados,...(appData.dados||{})};['dependents','incomeEntries','assets','payments','deductions','taxTables','notes','simulations','history','timeline'].forEach(k=>{if(!Array.isArray(appData[k]))appData[k]=[]});if(!appData.modelChoices||Array.isArray(appData.modelChoices))appData.modelChoices={};applySettings()}
 function migrarDadosAntigos(old){appData=defaultData();appData.settings={...appData.settings,...(old.settings||{})};appData.dados={...appData.dados,nome:old.settings?.nome||'',cpf:old.settings?.cpf||''};activeYear=old.settings?.anoDefault||activeYear;(old.entries||[]).forEach(e=>{appData.incomeEntries.push({id:e.id||uid('rend'),ano:+e.ano||activeYear,tipo:'trabalho',beneficiario:'Titular',fonte:e.fontePagadora||'',cnpj:e.cnpj||'',rendTrib:+e.rendTribs||0,prevOficial:+e.prevOficial||0,irrf:+e.irrf||0,dec13:+e.decTerceiro||0,irrf13:+e.irrf13||0,rendIsento:+e.rendIsentos||0,rendExclusiva:+e.rendExclusiva||0,plr:0,obs:e.obs||'',revisado:e.situacao==='conferido'||e.situacao==='declarado'})});(old.taxTables||[]).forEach(t=>appData.taxTables.push({...t,ano:+t.ano,parcelas:t.parcelas||t.parcelamentoQtd||1,selicAcumulada:t.selicAcumulada||t.jurosMensal||0,acrescimoQuota:t.acrescimoQuota||1,faixas:(t.faixas||[]).map(f=>({...f,ate:(f.ate===null?null:f.ate)}))}));appData.notes=old.notes||[];appData.simulations=old.simulations||[];appData.history=old.history||[];}
-function saveData(syncCloud=true){localStorage.setItem(KEY,JSON.stringify(appData));if(syncCloud&&window.leaoFirebase&&window.leaoFirebase.isReady())window.leaoFirebase.saveAppData(appData,activeYear);}
+function saveData(syncCloud=true){localStorage.setItem(storageKey(),JSON.stringify(appData));if(syncCloud&&window.leaoFirebase&&window.leaoFirebase.isReady())window.leaoFirebase.saveAppData(appData,activeYear);}
 function applySettings(){document.documentElement.dataset.theme=appData.settings.tema||'light';document.documentElement.style.fontSize=(appData.settings.fonte||16)+'px'}
 function money(v){const cents=appData.settings.centavos!=='nao';let n=typeof v==='number'?v:parseMoney(v);return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:cents?2:0,maximumFractionDigits:cents?2:0})}
 function parseMoney(v){if(v===null||v===undefined||v==='')return 0;if(typeof v==='number')return v;let s=String(v).replace(/R\$\s*/g,'').trim();s=s.replace(/\./g,'').replace(',','.');const n=parseFloat(s);return isNaN(n)?0:n}
@@ -792,7 +797,7 @@ function makeSimplePDF(text){const escpdf=t=>String(t).normalize('NFD').replace(
 function exportarPDFResumo(){const pdf=makeSimplePDF(resumoCompletoTexto());download('resumo-leao-domado-ir-'+activeYear+'.pdf',pdf,'application/pdf')}
 
 function limparDados(k){if(!confirm('Limpar '+k+'?'))return;appData[k]=[];saveData();renderAll();showToast('Dados limpos','success')}
-function limparTudo(){if(!confirm('Apagar todos os dados do app?'))return;localStorage.removeItem(KEY);appData=defaultData();saveData();renderAll()}
+function limparTudo(){if(!confirm('Apagar todos os dados deste usuário no app?'))return;localStorage.removeItem(storageKey());appData=defaultData();saveData();renderAll()}
 function renderParcelasFromCalc(){calcularERender()}
 let deferredInstallPrompt=null;
 function updateInstallButtons(show){document.querySelectorAll('#installBtn,#authInstallBtn,#installAppBtnSettings').forEach(btn=>{if(btn)btn.classList.toggle('show',!!show)});}
@@ -849,11 +854,16 @@ function initPWA(){
 }
 
 window.leaoDomadoGetData=function(){return appData};
-window.leaoDomadoSetData=function(cloudData){try{appData={...defaultData(),...(cloudData||{})};normalizeData();localStorage.setItem(KEY,JSON.stringify(appData));renderAll();showToast('Dados sincronizados do Firebase','success')}catch(e){console.error(e);showToast('Erro ao aplicar dados da nuvem','error')}};
-window.leaoDomadoLocalSave=function(){localStorage.setItem(KEY,JSON.stringify(appData))};
+window.leaoDomadoSetData=function(cloudData){try{appData={...defaultData(),...(cloudData||{})};normalizeData();localStorage.setItem(storageKey(),JSON.stringify(appData));renderAll();showToast('Dados sincronizados do Firebase','success')}catch(e){console.error(e);showToast('Erro ao aplicar dados da nuvem','error')}};
+window.leaoDomadoLocalSave=function(){localStorage.setItem(storageKey(),JSON.stringify(appData))};
+window.leaoSetStorageUser=function(uid){setStorageUser(uid)};
+window.leaoHasLocalForUid=function(uid){return hasLocalForUid(uid)};
+window.leaoLoadLocalForUid=function(uid){setStorageUser(uid);const local=readLocalByKey(storageKey());appData={...defaultData(),...(local||{})};normalizeData();buildYearSelector();renderAll();return !!local};
+window.leaoStartEmptyForUid=function(uid){setStorageUser(uid);appData=defaultData();normalizeData();localStorage.setItem(storageKey(),JSON.stringify(appData));buildYearSelector();renderAll();};
+window.leaoClearVisibleData=function(){appData=defaultData();normalizeData();buildYearSelector();renderAll();};
+window.leaoGetActiveYear=function(){return activeYear};
 
-
-window.leaoApplyCloudData=function(cloudData,cloudYear){if(!cloudData)return;try{appData={...defaultData(),...cloudData};normalizeData();activeYear=cloudYear||activeYear;localStorage.setItem(KEY,JSON.stringify(appData));buildYearSelector();renderAll();showToast('Dados sincronizados com Firebase','success')}catch(e){console.error(e);showToast('Erro ao sincronizar dados','error')}};
+window.leaoApplyCloudData=function(cloudData,cloudYear){if(!cloudData)return;try{appData={...defaultData(),...cloudData};normalizeData();activeYear=cloudYear||activeYear;localStorage.setItem(storageKey(),JSON.stringify(appData));buildYearSelector();renderAll();showToast('Dados sincronizados com Firebase','success')}catch(e){console.error(e);showToast('Erro ao sincronizar dados','error')}};
 loadData();buildYearSelector();setupMoneyMasks();initPWA();renderAll();
 
 </script>
@@ -885,8 +895,26 @@ function showAuthError(msg){ const el=$('authError'); if(el){ el.textContent=msg
 function clearAuthError(){ const el=$('authError'); if(el){ el.textContent=''; el.classList.remove('show'); } }
 function showBadge(msg, timeout=2200){ const b=$('cloudStatusBadge'); if(!b)return; b.textContent=msg; b.classList.add('show'); if(timeout) setTimeout(()=>b.classList.remove('show'),timeout); }
 function setAccount(user){ if($('authName')) $('authName').textContent=user?.displayName||user?.email||'Logado'; if($('authAvatar')) $('authAvatar').textContent=(user?.displayName||user?.email||'L').trim().charAt(0).toUpperCase(); document.querySelectorAll('#authUserEmail').forEach(el=>el.textContent=user?.email||user?.displayName||'Usuário conectado'); }
-async function loadCloudData(user){ const snap=await getDoc(appDocRef(user.uid)); if(snap.exists() && snap.data()?.payload){ window.leaoApplyCloudData?.(snap.data().payload, snap.data().activeYear); } else { await saveCloudData(window.appData, window.activeYear, true); } }
-async function saveCloudData(data, year, immediate=false){ if(!currentUser||!data)return; const run=async()=>{ await setDoc(appDocRef(currentUser.uid), { payload: JSON.parse(JSON.stringify(data)), activeYear: year, updatedAt: serverTimestamp(), app:'Leão Domado IR', appVersion:'3.8' }, { merge:true }); }; if(immediate) return run(); clearTimeout(saveTimer); saveTimer=setTimeout(()=>run().catch(e=>{console.error(e);showBadge('Não foi possível salvar na nuvem',2600)}),800); }
+async function loadCloudData(user){
+  window.leaoSetStorageUser?.(user.uid);
+  const snap=await getDoc(appDocRef(user.uid));
+  if(snap.exists() && snap.data()?.payload){
+    window.leaoApplyCloudData?.(snap.data().payload, snap.data().activeYear);
+    return 'cloud';
+  }
+  // Conta nova: NÃO envia o cache de outro usuário para a nuvem.
+  // Se já houver cache local específico deste UID, usa apenas esse cache.
+  // Se não houver, inicia vazio e grava um documento limpo para este UID.
+  const hasOwnLocal=window.leaoHasLocalForUid?.(user.uid);
+  if(hasOwnLocal){
+    window.leaoLoadLocalForUid?.(user.uid);
+  }else{
+    window.leaoStartEmptyForUid?.(user.uid);
+  }
+  await saveCloudData(window.leaoDomadoGetData?.(), window.leaoGetActiveYear?.() || new Date().getFullYear()-1, true);
+  return hasOwnLocal ? 'local-user' : 'empty-new-user';
+}
+async function saveCloudData(data, year, immediate=false){ if(!currentUser||!data)return; const run=async()=>{ await setDoc(appDocRef(currentUser.uid), { payload: JSON.parse(JSON.stringify(data)), activeYear: year, updatedAt: serverTimestamp(), app:'Leão Domado IR', appVersion:'3.9' }, { merge:true }); }; if(immediate) return run(); clearTimeout(saveTimer); saveTimer=setTimeout(()=>run().catch(e=>{console.error(e);showBadge('Não foi possível salvar na nuvem',2600)}),800); }
 
 let authMode='login';
 function setBusyAuth(isBusy){ document.querySelectorAll('#emailAuthBtn,#googleLoginBtn,#authTabLogin,#authTabCreate').forEach(btn=>{ if(btn) btn.disabled=!!isBusy; }); }
@@ -953,10 +981,16 @@ onAuthStateChanged(auth, async (user)=>{
     $('authStatus')?.classList.add('show');
     $('logoutBtn')?.classList.add('show');
     showBadge('Sincronizando Firebase...',0);
-    try{ await loadCloudData(user); showBadge('Firebase sincronizado'); window.saveData?.(); }
+    try{
+      const source=await loadCloudData(user);
+      showBadge(source==='empty-new-user'?'Conta nova iniciada vazia':'Firebase sincronizado');
+      if(source==='cloud') window.leaoDomadoLocalSave?.();
+    }
     catch(e){ console.error(e); showAuthError('Login feito, mas o Firestore não carregou. Confira as regras do banco.'); showBadge('Erro ao carregar Firestore',3600); }
   }else{
     setAccount(null);
+    window.leaoSetStorageUser?.(null);
+    window.leaoClearVisibleData?.();
     $('authScreen')?.classList.remove('hidden');
     $('authStatus')?.classList.remove('show');
     $('logoutBtn')?.classList.remove('show');
